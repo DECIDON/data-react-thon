@@ -15,7 +15,25 @@ parlent le même langage. Format imposé par la foundation : terme — définiti
   `_Avoid_ : « throw/catch » comme API, « Result » sans discriminant._
 - **Ratchet** — plafond versionné du nombre de diagnostics ESLint ; ne peut que descendre (baseline 0).
 
-## Domaine (à venir)
+## Domaine — « presse & palabre » (actuel, ADR C-007)
 
-- _(À définir par l'ADR de tranchage du domaine — reprendre le domaine CorpuSense de la foundation, ou
-  un domaine « datathon » propre ; écrire ici chaque terme retenu avec son `_Avoid_`.)_
+- **Sujet** — thème d'actualité du trimestre, unique file de jointure entre presse et prises de parole ;
+  désigné par un `id`, décrit dans `topics.json` (jamais en dur dans le code). `_Avoid_ : « thème », « tag », « topic » (angl. réservé aux imports LDA éventuels)._
+- **Vitrine** — statut d'un sujet mis en avant sur l'accueil (`featured`). `_Avoid_ : « à la une », « premium »._
+- **Prise de parole** — extrait d'intervention d'un *locuteur* devant une *chambre*, à une date donnée.
+  `_Avoid_ : « discours » (implique le texte intégral, que nous n'avons pas), « citation » (générique)._
+- **Coupe de presse** — extrait d'article paru dans un *journal*, à une date donnée. `_Avoid_ : « article »
+  (le contenu intégral n'existe pas au prototype), « coupure »._
+- **Locuteur** — personne identifiée qui prend parole (champ `speaker` ; présent pour une prise de parole,
+  absent pour une coupe). `_Avoid_ : « orateur », « député » (la chambre peut être le Sénat)._
+- **Source** — titre et URL rattachant un document à son support (journal, compte rendu de séance).
+  `_Avoid_ : « média », « provenance »._
+- **Polarité** — attitude d'un document **vis-à-vis d'un sujet** : `positif | neutre | negatif`. Toujours
+  rattachée au couple document×sujet, jamais au document seul. `_Avoid_ : « sentiment » (NLP), « ton »._
+- **Phare** — document désigné par `highlight` comme extrait à montrer en tête de la page de son sujet.
+  `_Avoid_ : « vedette », « mis en avant » (décris l'intention, pas le champ)._
+- **Miroir** — bloc d'une page de sujet qui met en regard le phare presse et le phare parlement du même
+  sujet. `_Avoid_ : « face-à-face », « comparatif »._
+- **Corpus fictif** — jeu de données commissionné sous `src/data/1934/` : journaux, locuteurs et contenus
+  inventés à saveur 1934, jamais de paroles fabriquées attribuées à des personnes réelles (ADR C-008).
+  `_Avoid_ : « démo », « fake data », « mock » (le mock est en test, le corpus fictif est en prod du prototype)._

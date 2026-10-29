@@ -56,7 +56,52 @@ deuxième langue est une abstraction sans besoin observé (D-004).
 d'un contenu piloté par locale → i18next + mock à clés complet en test, et reprise des chaînes.
 **Conséquences.** Les tests E2E/component assertent sur les libellés réels jusqu'alors (pas de `data-testid`).
 
+## C-007 — Domaine : actualité 1934, « presse & palabre » (2026-10-29) · statut : acceptée
+
+**Contexte.** Première feature métier (déclencheur R1). Deux sources à croiser — presse imprimée et prises de
+parole parlementaires — sans modèle commun évident ; la reprise du domaine CorpuSense de la foundation
+importerait un vocabulaire et des contraintes sans besoin observé ici.
+**Décision.** Domaine propre, « presse & palabre » : des *sujets* (liste à part, file de jointure), documentés
+par des *coupes de presse* et des *prises de parole*, chacun portant une *polarité* par sujet. Le glossaire
+du domaine est celui de `CONTEXT.md` § Domaine et fait foi ; le format de données idéal (contenu, source,
+date, locuteur optionnel, sujets+polyarité, phare) y est fixé et sert de contrat entre données et UI.
+Période figée au premier trimestre 1934 (prototype).
+**Alternatives.** Reprise CorpuSense — rejeté (abstraction sans besoin) ; jointure par entités nommées ou
+par topics importés — rejetés pour v1 : la jointure par liste de sujets est la plus simple et suffit à la
+vitrine ; à reconsidérer si un second mode d'association est demandé.
+**Conséquences.** R1 close. Tout nouveau terme du domaine passe d'abord par `CONTEXT.md`. La feature se
+déroule selon la tranche R9 de `roadmap.md`, spec dans `spec-presse-palabre-1934.md`.
+
+## C-008 — Données fictives en lecture seule ; dérogation à Dexie (2026-10-29) · statut : acceptée, déclencheur écrit
+
+**Contexte.** Le prototype doit prouver le format et les vues avant la moindre acquisition réelle (les
+corpus réels existent mais hors périmètre). La roadmap prévoyait Dexie/IndexedDB (R2) dès la première
+donnée ; cette donnée serait ici en écriture zéro.
+**Décision.** Jeu de données **fictif** (monde inventé à saveur 1934, jamais de citations mises dans la
+bouche de personnes réelles), commissionné dans le dépôt sous `src/data/1934/`, en JSON conforme au
+contrat de `spec-presse-palabre-1934.md`, validé au chargement par **Zod** (`.strict()`). Un port de
+repository (`src/data/`) expose des collections typées aux hooks ; l'absence de base locale est un choix
+acté, pas un oubli. Le caractère fictif des données est affiché dans l'UI.
+**Alternatives.** Dexie dès maintenant — rejeté : persistance sans écriture = couche morte ; API Impresso
+au runtime — rejeté : token sur page publique (C-005) et réseau en démo.
+**Conséquences.** Zod entre en dépendance. **Déclencheur de réexamen écrit :** la première exigence
+d'écriture (annotation, sélection persistée) → Dexie reprend la main (roadmap R2) et les JSON de
+`src/data/1934/` deviennent un format d'import, pas de runtime.
+
+## C-009 — Nivo pour les graphiques (2026-10-29) · statut : acceptée
+
+**Contexte.** La branche `feat-dataviz` porte de vrais graphiques (choix utilisateur explicite), hors des
+trois libellés figés par C-001. Besoin : carte calorique temporelle, nuage de points en couloirs, barres
+empilées ; React 19 imposé.
+**Décision.** `@nivo/calendar`, `@nivo/scatter`, `@nivo/bar` en version 0.99 (peer React ^19 vérifié),
+thème clair personnalisé aligné sur la palette Tailwind de l'app, conteneurs responsives, infobulles +
+clic-filtre. En test (jsdom), les composants Nivo sont mockés à la frontière ; la logique testée est
+l'agrégation `domain/`, pas le rendu SVG.
+**Alternatives.** Recharts, Plotly (déjà rencontré ailleurs) — rejetés sur demande explicite ; géométrie
+CSS maison — rejetée : la branche s'appelle dataviz.
+**Conséquences.** Trois paquets Nivo + leurs pairs (`@react-spring/web`, auto-sizer) au bundle ; la politique
+de mock de graphiques vaut pour toute lib de rendu futur ; montée de version majeure = ADR (C-001).
+
 ## À venir (pas encore d'ADR)
 
-- Tranchage du domaine (reprise CorpuSense vs domaine « datathon » propre) → met à jour `CONTEXT.md`.
-- Choix de la persistance (Dexie v1 sans héritage, ADR C-002 du source) — au premier entity.
+- Choix de la persistance (Dexie v1 sans héritage) — au premier besoin d'écriture (déclencheur écrit en C-008).
