@@ -61,8 +61,8 @@ d'un contenu piloté par locale → i18next + mock à clés complet en test, et 
 **Contexte.** Première feature métier (déclencheur R1). Deux sources à croiser — presse imprimée et prises de
 parole parlementaires — sans modèle commun évident ; la reprise du domaine CorpuSense de la foundation
 importerait un vocabulaire et des contraintes sans besoin observé ici.
-**Décision.** Domaine propre, « presse & palabre » : des *sujets* (liste à part, file de jointure), documentés
-par des *coupes de presse* et des *prises de parole*, chacun portant une *polarité* par sujet. Le glossaire
+**Décision.** Domaine propre, « presse & palabre » : des _sujets_ (liste à part, file de jointure), documentés
+par des _coupes de presse_ et des _prises de parole_, chacun portant une _polarité_ par sujet. Le glossaire
 du domaine est celui de `CONTEXT.md` § Domaine et fait foi ; le format de données idéal (contenu, source,
 date, locuteur optionnel, sujets+polyarité, phare) y est fixé et sert de contrat entre données et UI.
 Période figée au premier trimestre 1934 (prototype).

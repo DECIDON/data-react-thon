@@ -20,9 +20,9 @@ parlent le même langage. Format imposé par la foundation : terme — définiti
 - **Sujet** — thème d'actualité du trimestre, unique file de jointure entre presse et prises de parole ;
   désigné par un `id`, décrit dans `topics.json` (jamais en dur dans le code). `_Avoid_ : « thème », « tag », « topic » (angl. réservé aux imports LDA éventuels)._
 - **Vitrine** — statut d'un sujet mis en avant sur l'accueil (`featured`). `_Avoid_ : « à la une », « premium »._
-- **Prise de parole** — extrait d'intervention d'un *locuteur* devant une *chambre*, à une date donnée.
+- **Prise de parole** — extrait d'intervention d'un _locuteur_ devant une _chambre_, à une date donnée.
   `_Avoid_ : « discours » (implique le texte intégral, que nous n'avons pas), « citation » (générique)._
-- **Coupe de presse** — extrait d'article paru dans un *journal*, à une date donnée. `_Avoid_ : « article »
+- **Coupe de presse** — extrait d'article paru dans un _journal_, à une date donnée. `_Avoid_ : « article »
   (le contenu intégral n'existe pas au prototype), « coupure »._
 - **Locuteur** — personne identifiée qui prend parole (champ `speaker` ; présent pour une prise de parole,
   absent pour une coupe). `_Avoid_ : « orateur », « député » (la chambre peut être le Sénat)._

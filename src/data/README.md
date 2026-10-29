@@ -1,1 +1,15 @@
-# Placeholder : créé au commit 1 (convention features-first), rempli à la première feature.
+# `data/` — port repository (seule couche qui importe les données)
+
+Ici vivent les adaptateurs qui transforment des sources brutes (JSON commissionnés, un jour Dexie)
+en collections typées pour les hooks. Règle de frontière (ADR C-003) : `data/` peut importer
+`domain/` et `platform/` ; l'UI (composants, pages) ne l'importe pas directement, elle passe par `hooks/`.
+
+## `data/1934/` — corpus fictif « presse & palabre » (ADR C-008)
+
+- `topics.json` — les 6 sujets du trimestre (3 en vitrine), seul lieu de définition des sujets.
+- `statements.json` — les prises de parole (`pd-0xx`), locuteurs et chambres fictifs.
+- `press.json` — les coupes de presse (`cp-0xx`), journaux fictifs à saveur 1934.
+- `corpus.test.ts` — validation du corpus contre les schémas `domain/1934` + règles de commissionnement.
+
+Monde entièrement fictif : jamais de paroles fabriquées attribuées à des personnes, journaux ou
+chambres réels. Le port repository typé (collections + agrégats) arrive en 9.2.

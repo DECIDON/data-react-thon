@@ -1,0 +1,608 @@
+[
+  {
+    "id": "cp-001",
+    "date": "1934-01-02",
+    "source": {
+      "title": "L'Écho briard — édition du 2 janvier 1934",
+      "url": "https://archives.example/echo-briard/1934-01-02"
+    },
+    "content": "Une signature qui rassure les foyers. Le protocole de Genoves sera examiné la semaine prochaine par la commission des affaires étrangères, et déjà la rente se raffermit. La paix est chère : achetons-la en papier plutôt qu'en fils de famille.",
+    "subjects": [{ "topicId": "desarmement", "polarity": "positif" }]
+  },
+  {
+    "id": "cp-002",
+    "date": "1934-01-06",
+    "source": {
+      "title": "La Croix audoise — édition du 6 janvier 1934",
+      "url": "https://archives.example/croix-audoise/1934-01-06"
+    },
+    "content": "Un désarmement négocié par ceux qui gardent leur sabre n'est qu'une embuscade différée. On déshabille la garnison aujourd'hui ; on mendiera le mercenaire demain.",
+    "subjects": [{ "topicId": "desarmement", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-003",
+    "date": "1934-01-13",
+    "source": {
+      "title": "Le Républicain picard — édition du 13 janvier 1934",
+      "url": "https://archives.example/republicain-picard/1934-01-13"
+    },
+    "content": "C'est signé ! Trois mois de séance, quatre délégations éreintées, une page d'écriture. Et cette page, disent les vieux soldats, pèse plus qu'un canon — elle en retient cent mille au pays.",
+    "subjects": [{ "topicId": "desarmement", "polarity": "positif" }],
+    "highlight": true
+  },
+  {
+    "id": "cp-004",
+    "date": "1934-01-20",
+    "source": {
+      "title": "Le Torchon lorrain — édition du 20 janvier 1934",
+      "url": "https://archives.example/torchon-lorrain/1934-01-20"
+    },
+    "content": "La commission du désarmement s'est réunie à dix heures, ajournée à quatre, réjouie à huit. Travail prodigieux : depuis janvier elle n'a consigné que le menu.",
+    "subjects": [{ "topicId": "desarmement", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-005",
+    "date": "1934-01-27",
+    "source": {
+      "title": "Le Phare ligérien — édition du 27 janvier 1934",
+      "url": "https://archives.example/phare-ligerien/1934-01-27"
+    },
+    "content": "L'échange des ratifications de Genoves s'achève sans incident. Dans notre province, les chambres de commerce respirent : elles avaient déjà vu des cuirassés dans chaque clause.",
+    "subjects": [{ "topicId": "desarmement", "polarity": "positif" }]
+  },
+  {
+    "id": "cp-006",
+    "date": "1934-02-03",
+    "source": {
+      "title": "La Lanterne cévenole — édition du 3 février 1934",
+      "url": "https://archives.example/lanterne-cevenole/1934-02-03"
+    },
+    "content": "On désarme pour la paix, on réarme pour la revue. L'essentiel est que la sonnerie trouve son train.",
+    "subjects": [{ "topicId": "desarmement", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-007",
+    "date": "1934-02-10",
+    "source": {
+      "title": "La Croix audoise — édition du 10 février 1934",
+      "url": "https://archives.example/croix-audoise/1934-02-10"
+    },
+    "content": "À Genoves on désarme sur le papier, hors des marges on coule sur l'enclume. Un pays désarmé n'est pas un pays apaisé : c'est un pays désigné.",
+    "subjects": [{ "topicId": "desarmement", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-008",
+    "date": "1934-02-17",
+    "source": {
+      "title": "Le Républicain picard — édition du 17 février 1934",
+      "url": "https://archives.example/republicain-picard/1934-02-17"
+    },
+    "content": "Première application du protocole : la fonderie de Mesières convertie à la charrue. Les ouvriers signent la pétition de remerciement à la délégation.",
+    "subjects": [{ "topicId": "desarmement", "polarity": "positif" }]
+  },
+  {
+    "id": "cp-009",
+    "date": "1934-02-24",
+    "source": {
+      "title": "Le Torchon lorrain — édition du 24 février 1934",
+      "url": "https://archives.example/torchon-lorrain/1934-02-24"
+    },
+    "content": "Le ministre de la guerre jure que le protocole est la fermeté même. Il le jure si bien qu'il ne dit plus rien d'autre. Jurer, c'est désarmer en paroles ; le reste tarde.",
+    "subjects": [{ "topicId": "desarmement", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-010",
+    "date": "1934-03-03",
+    "source": {
+      "title": "L'Écho briard — édition du 3 mars 1934",
+      "url": "https://archives.example/echo-briard/1934-03-03"
+    },
+    "content": "La délégation borvalque revient à la table. Toute place reprise est un canon remis en pile.",
+    "subjects": [{ "topicId": "desarmement", "polarity": "positif" }]
+  },
+  {
+    "id": "cp-011",
+    "date": "1934-03-10",
+    "source": {
+      "title": "La Lanterne cévenole — édition du 10 mars 1934",
+      "url": "https://archives.example/lanterne-cevenole/1934-03-10"
+    },
+    "content": "La sous-commission du désarmement a nommé une sous-sous-commission. En allant ce train, nous verrons le siècle finir en paix.",
+    "subjects": [{ "topicId": "desarmement", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-012",
+    "date": "1934-03-17",
+    "source": {
+      "title": "Le Phare ligérien — édition du 17 mars 1934",
+      "url": "https://archives.example/phare-ligerien/1934-03-17"
+    },
+    "content": "La commission de contrôle confirme les clauses. Chacune des parties compte les canons de l'autre par le trou de la serrure — progrès tout de même.",
+    "subjects": [{ "topicId": "desarmement", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-013",
+    "date": "1934-03-24",
+    "source": {
+      "title": "La Croix audoise — édition du 24 mars 1934",
+      "url": "https://archives.example/croix-audoise/1934-03-24"
+    },
+    "content": "Le protocole a déjà sa religion et ses reliques, son Te Deum tout prêt. Chanterons le Te Deum le jour où le premier cachet sautera.",
+    "subjects": [{ "topicId": "desarmement", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-014",
+    "date": "1934-03-30",
+    "source": {
+      "title": "Le Républicain picard — édition du 30 mars 1934",
+      "url": "https://archives.example/republicain-picard/1934-03-30"
+    },
+    "content": "Les crédits de Genoves passent au budget, par neuf voix contre trois. Le pays vient de voter, sans fracas, sa plus grosse pacification du trimestre.",
+    "subjects": [{ "topicId": "desarmement", "polarity": "positif" }]
+  },
+  {
+    "id": "cp-015",
+    "date": "1934-01-05",
+    "source": {
+      "title": "L'Écho briard — édition du 5 janvier 1934",
+      "url": "https://archives.example/echo-briard/1934-01-05"
+    },
+    "content": "Voilà les torches de Clermont-le-Forez allumées, les cartouches distribuées, les députés hués. Assez des demi-mesures : les bandes armées veulent une loi, et cette loi s'appelle dissolution.",
+    "subjects": [{ "topicId": "ligues", "polarity": "negatif" }],
+    "highlight": true
+  },
+  {
+    "id": "cp-016",
+    "date": "1934-01-12",
+    "source": {
+      "title": "Le Torchon lorrain — édition du 12 janvier 1934",
+      "url": "https://archives.example/torchon-lorrain/1934-01-12"
+    },
+    "content": "Le Feu Libre a des casquettes neuves, la Solidarité Ferrande des tambours neufs. La préfecture enrôle, le ministère pèse. Les tambours gagnent une semaine sur chaque semaine.",
+    "subjects": [{ "topicId": "ligues", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-017",
+    "date": "1934-01-19",
+    "source": {
+      "title": "La Croix audoise — édition du 19 janvier 1934",
+      "url": "https://archives.example/croix-audoise/1934-01-19"
+    },
+    "content": "Il faut le dire contre le langage commode : les chantiers de quartier de la Solidarité Ferrande font un ouvrage honnête d'ordre et de paroisse. Avant de briser ces bâtons, voyez ce qui les remplacera.",
+    "subjects": [{ "topicId": "ligues", "polarity": "positif" }]
+  },
+  {
+    "id": "cp-018",
+    "date": "1934-01-26",
+    "source": {
+      "title": "Le Républicain picard — édition du 26 janvier 1934",
+      "url": "https://archives.example/republicain-picard/1934-01-26"
+    },
+    "content": "Onze rapports préfectoraux, onze cortèges, onze cris de mort. La République reçoit chez elle les injures mêmes qu'on lui rend.",
+    "subjects": [{ "topicId": "ligues", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-019",
+    "date": "1934-02-02",
+    "source": {
+      "title": "Le Phare ligérien — édition du 2 février 1934",
+      "url": "https://archives.example/phare-ligerien/1934-02-02"
+    },
+    "content": "Les salles vides font les places pleines. Où l'État ne parle plus à la misère, la misère s'enrole sous le drapeau qui harangue. Traitez la cause, les bandes se dissoudront d'elles-mêmes.",
+    "subjects": [{ "topicId": "ligues", "polarity": "positif" }]
+  },
+  {
+    "id": "cp-020",
+    "date": "1934-02-09",
+    "source": {
+      "title": "La Lanterne cévenole — édition du 9 février 1934",
+      "url": "https://archives.example/lanterne-cevenole/1934-02-09"
+    },
+    "content": "On a manifesté au Feu Libre à Vergy à six heures, à la contre-manifestation à six heures et quart, à la bastonnade à six heures et demie. Précision qui fera honneur à notre province.",
+    "subjects": [{ "topicId": "ligues", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-021",
+    "date": "1934-02-16",
+    "source": {
+      "title": "L'Écho briard — édition du 16 février 1934",
+      "url": "https://archives.example/echo-briard/1934-02-16"
+    },
+    "content": "La bagarre des halles laisse deux morts et des drapeaux crevés. Quand une feuille compte les cartouches avant les douleurs, elle a déjà capitulé.",
+    "subjects": [{ "topicId": "ligues", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-022",
+    "date": "1934-02-23",
+    "source": {
+      "title": "La Croix audoise — édition du 23 février 1934",
+      "url": "https://archives.example/croix-audoise/1934-02-23"
+    },
+    "content": "Nous louons l'ouvrage de quartier, nous ne louons pas le cortège cagoulé. De l'ordre au guet-apens il n'y a qu'une longueur de torche.",
+    "subjects": [{ "topicId": "ligues", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-023",
+    "date": "1934-03-02",
+    "source": {
+      "title": "Le Républicain picard — édition du 2 mars 1934",
+      "url": "https://archives.example/republicain-picard/1934-03-02"
+    },
+    "content": "Dissoudre ! Les signatures montent par centaines dans les petites villes du bassin de Valmurand. La République n'a pas de temps à perdre avec les maîtres d'armes.",
+    "subjects": [{ "topicId": "ligues", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-024",
+    "date": "1934-03-12",
+    "source": {
+      "title": "Le Torchon lorrain — édition du 12 mars 1934",
+      "url": "https://archives.example/torchon-lorrain/1934-03-12"
+    },
+    "content": "Le projet de dissolution dort dans un tiroir, le tiroir dans un cabinet, le cabinet dans l'attente. Les tambours, eux, ne dorment pas.",
+    "subjects": [{ "topicId": "ligues", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-025",
+    "date": "1934-03-22",
+    "source": {
+      "title": "Le Phare ligérien — édition du 22 mars 1934",
+      "url": "https://archives.example/phare-ligerien/1934-03-22"
+    },
+    "content": "Une enquête parlementaire sur les sociétés de ligue s'annonce. On entendra les comptes des torches, on pèsera les tambours. Le temps, en attendant, ne court pas plus vite.",
+    "subjects": [{ "topicId": "ligues", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-026",
+    "date": "1934-01-04",
+    "source": {
+      "title": "La Lanterne cévenole — édition du 4 janvier 1934",
+      "url": "https://archives.example/lanterne-cevenole/1934-01-04"
+    },
+    "content": "La rente consolidée ouvre à quatre-vingt-douze, reprend à quatre-vingt-huit, tombe à quatre-vingt-un. La Bourse a une fièvre, et le mieux est le pire de cette maladie.",
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-027",
+    "date": "1934-01-11",
+    "source": {
+      "title": "Le Phare ligérien — édition du 11 janvier 1934",
+      "url": "https://archives.example/phare-ligerien/1934-01-11"
+    },
+    "content": "La semaine s'achève agitée à la foire. Les valeurs d'armement reprennent sur les bruits, les chemins de fer sur les soleils. Il ne faut vendre qu'à l'heure.",
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-028",
+    "date": "1934-01-18",
+    "source": {
+      "title": "Le Républicain picard — édition du 18 janvier 1934",
+      "url": "https://archives.example/republicain-picard/1934-01-18"
+    },
+    "content": "Le petit rentier qui avait couché ses épargnes dans la dette de guerre voit revenir pour quatre-vingts francs un billet de quatre cents. On ne lui vole pas son bien, on le lui consolide.",
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-029",
+    "date": "1934-01-25",
+    "source": {
+      "title": "L'Écho briard — édition du 25 janvier 1934",
+      "url": "https://archives.example/echo-briard/1934-01-25"
+    },
+    "content": "La confiance revient : l'emprunt de consolidation se tient à quatre-vingt-six. Un pays qui paye ses dettes se prête à lui-même.",
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "positif" }]
+  },
+  {
+    "id": "cp-030",
+    "date": "1934-02-01",
+    "source": {
+      "title": "La Croix audoise — édition du 1er février 1934",
+      "url": "https://archives.example/croix-audoise/1934-02-01"
+    },
+    "content": "Jamais une fortune faite en huit jours à la coulisse ne valut une récolte. Dieu bénit la foire ; la foire bénit trop de choses.",
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-031",
+    "date": "1934-02-08",
+    "source": {
+      "title": "Le Torchon lorrain — édition du 8 février 1934",
+      "url": "https://archives.example/torchon-lorrain/1934-02-08"
+    },
+    "content": "On rachète, dit-on, deux maisons d'armement avant même que l'interpellation soit déposée. Coïncidence — mais la Bourse a cette coïncidence fréquente.",
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-032",
+    "date": "1934-02-15",
+    "source": {
+      "title": "La Lanterne cévenole — édition du 15 février 1934",
+      "url": "https://archives.example/lanterne-cevenole/1934-02-15"
+    },
+    "content": "On joue à la hausse, on joue à la baisse, on joue au décret. On ne joue plus que la récolte, parce qu'elle est sûre.",
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-033",
+    "date": "1934-02-22",
+    "source": {
+      "title": "Le Phare ligérien — édition du 22 février 1934",
+      "url": "https://archives.example/phare-ligerien/1934-02-22"
+    },
+    "content": "L'emprunt est souscrit librement au-dessus du pair. Les marchands de banque eux-mêmes le disent, et eux-mêmes ne le disent jamais : quand la signature du pays porte, on leur pardonne le reste.",
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "positif" }]
+  },
+  {
+    "id": "cp-034",
+    "date": "1934-03-01",
+    "source": {
+      "title": "Le Républicain picard — édition du 1er mars 1934",
+      "url": "https://archives.example/republicain-picard/1934-03-01"
+    },
+    "content": "La pension du caporal est rognée à trois solz ; le consolidataire touche son intérêt en billets neufs. La guerre est payée, oui — par les débiteurs de ses créanciers.",
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-035",
+    "date": "1934-03-09",
+    "source": {
+      "title": "L'Écho briard — édition du 9 mars 1934",
+      "url": "https://archives.example/echo-briard/1934-03-09"
+    },
+    "content": "Les valeurs de défense nationale reprennent à tous les coupons. Un peuple qui prête à ses travaux n'a rien à craindre des hommes qui lui promettent des pillages.",
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "positif" }]
+  },
+  {
+    "id": "cp-036",
+    "date": "1934-03-19",
+    "source": {
+      "title": "Le Torchon lorrain — édition du 19 mars 1934",
+      "url": "https://archives.example/torchon-lorrain/1934-03-19"
+    },
+    "content": "Nous publions les bordereaux : la dette des morts se cote à vingt fois trois. Ce que la patrie avait payé pour l'armement est retourné à l'armement, sans repasser par le tombeau.",
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "negatif" }],
+    "highlight": true
+  },
+  {
+    "id": "cp-037",
+    "date": "1934-03-27",
+    "source": {
+      "title": "La Lanterne cévenole — édition du 27 mars 1934",
+      "url": "https://archives.example/lanterne-cevenole/1934-03-27"
+    },
+    "content": "La foire se clôt en beauté : les riches sont plus riches, les pauvres plus pauvres, la cote plus haute. Le tambour sonne pour tout le monde, mais pas la même fanfare.",
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-038",
+    "date": "1934-01-09",
+    "source": {
+      "title": "L'Écho briard — édition du 9 janvier 1934",
+      "url": "https://archives.example/echo-briard/1934-01-09"
+    },
+    "content": "Le budget qu'on hait nous sauvera. Une chaire de plus, un doublement de traitement de moins : la rigueur du jour est la signature de demain, et nos créanciers lisent le Journal officiel comme nous.",
+    "subjects": [{ "topicId": "budget", "polarity": "positif" }],
+    "highlight": true
+  },
+  {
+    "id": "cp-039",
+    "date": "1934-01-23",
+    "source": {
+      "title": "Le Républicain picard — édition du 23 janvier 1934",
+      "url": "https://archives.example/republicain-picard/1934-01-23"
+    },
+    "content": "Douze cents emplois rayés, le facteur gelé, le spectacle de l'ouvrier taxé. On appelle cela boucler le budget ; le facteur appelle cela avoir froid.",
+    "subjects": [{ "topicId": "budget", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-040",
+    "date": "1934-02-06",
+    "source": {
+      "title": "La Lanterne cévenole — édition du 6 février 1934",
+      "url": "https://archives.example/lanterne-cevenole/1934-02-06"
+    },
+    "content": "Les économies du ministre du budget : deux lustres de moins aux corridors, un kiosque de moins au square, une machine à écrire de moins par bureau. La République sera sobre, ou elle ne sera pas fleurie.",
+    "subjects": [{ "topicId": "budget", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-041",
+    "date": "1934-02-13",
+    "source": {
+      "title": "La Croix audoise — édition du 13 février 1934",
+      "url": "https://archives.example/croix-audoise/1934-02-13"
+    },
+    "content": "Voici enfin un Trésor qui tient ses comptes. Le ménage d'abord ; les merveilles ensuite.",
+    "subjects": [{ "topicId": "budget", "polarity": "positif" }]
+  },
+  {
+    "id": "cp-042",
+    "date": "1934-02-27",
+    "source": {
+      "title": "Le Torchon lorrain — édition du 27 février 1934",
+      "url": "https://archives.example/torchon-lorrain/1934-02-27"
+    },
+    "content": "Par décrets-lois on supprime la chaire du maître de Vergy ; par amendement on refait le salon du ministre en marbre. La rigueur, oui — mais à quel dos ?",
+    "subjects": [{ "topicId": "budget", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-043",
+    "date": "1934-03-06",
+    "source": {
+      "title": "Le Républicain picard — édition du 6 mars 1934",
+      "url": "https://archives.example/republicain-picard/1934-03-06"
+    },
+    "content": "Trois décrets en un mois, zéro vote. Le gouvernement par le carnet est un gouvernement qui a fui l'urne.",
+    "subjects": [{ "topicId": "budget", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-044",
+    "date": "1934-03-13",
+    "source": {
+      "title": "L'Écho briard — édition du 13 mars 1934",
+      "url": "https://archives.example/echo-briard/1934-03-13"
+    },
+    "content": "Les comptes se ferment sur l'excédent. L'orage passe ; la rente tient. On peut dire pire et dire beaucoup.",
+    "subjects": [{ "topicId": "budget", "polarity": "positif" }]
+  },
+  {
+    "id": "cp-045",
+    "date": "1934-03-20",
+    "source": {
+      "title": "La Lanterne cévenole — édition du 20 mars 1934",
+      "url": "https://archives.example/lanterne-cevenole/1934-03-20"
+    },
+    "content": "Le budget est voté. Le député qui s'abstient compte ; celui qui applaudit compte aussi ; celui qui paye ne compte pas, il paye.",
+    "subjects": [{ "topicId": "budget", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-046",
+    "date": "1934-03-29",
+    "source": {
+      "title": "Le Phare ligérien — édition du 29 mars 1934",
+      "url": "https://archives.example/phare-ligerien/1934-03-29"
+    },
+    "content": "La loi de finances revient au Sénat pour sa lecture dernière. Le village l'attend comme un verdict ; la Bourse l'a déjà lue.",
+    "subjects": [{ "topicId": "budget", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-047",
+    "date": "1934-01-16",
+    "source": {
+      "title": "Le Torchon lorrain — édition du 16 janvier 1934",
+      "url": "https://archives.example/torchon-lorrain/1934-01-16"
+    },
+    "content": "Les bordereaux de la poudrerie existent, nous les tenons, nous les imprimons. Qui nous accuse de diffamation est invité à voir les comptes : ils sont plus parlants que nous.",
+    "subjects": [{ "topicId": "presse-scandale", "polarity": "positif" }]
+  },
+  {
+    "id": "cp-048",
+    "date": "1934-01-30",
+    "source": {
+      "title": "La Croix audoise — édition du 30 janvier 1934",
+      "url": "https://archives.example/croix-audoise/1934-01-30"
+    },
+    "content": "Une feuille qui vit des ordures d'autrui vit de boue. L'affaire de la poudrerie est un feuilleton, non un tribunal.",
+    "subjects": [{ "topicId": "presse-scandale", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-049",
+    "date": "1934-02-12",
+    "source": {
+      "title": "Le Phare ligérien — édition du 12 février 1934",
+      "url": "https://archives.example/phare-ligerien/1934-02-12"
+    },
+    "content": "Les deux témoins de la poudrerie se contredisent avec un ensemble qui honore le genre. On saura la vérité, mais on aura payé le papier.",
+    "subjects": [{ "topicId": "presse-scandale", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-050",
+    "date": "1934-02-20",
+    "source": {
+      "title": "La Lanterne cévenole — édition du 20 février 1934",
+      "url": "https://archives.example/lanterne-cevenole/1934-02-20"
+    },
+    "content": "Le scandale est un plat qui se sert chaud, deux fois, et jamais seul. On compte déjà onze plaines en diffamation depuis janvier : autant que de défilés, autant que de giboulées.",
+    "subjects": [{ "topicId": "presse-scandale", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-051",
+    "date": "1934-02-28",
+    "source": {
+      "title": "Le Républicain picard — édition du 28 février 1934",
+      "url": "https://archives.example/republicain-picard/1934-02-28"
+    },
+    "content": "La commission d'enquête a obtenu les comptes dédoublés. La lumière descend, et elle descend sur les mains les plus gantées.",
+    "subjects": [{ "topicId": "presse-scandale", "polarity": "positif" }]
+  },
+  {
+    "id": "cp-052",
+    "date": "1934-03-08",
+    "source": {
+      "title": "Le Torchon lorrain — édition du 8 mars 1934",
+      "url": "https://archives.example/torchon-lorrain/1934-03-08"
+    },
+    "content": "La vérité entre aujourd'hui au prétoire, sous escorte de gendarmes. Le journal prévenu s'appelle le Torchon lorrain ; le vrai prévenu s'appelle le bordereau.",
+    "subjects": [{ "topicId": "presse-scandale", "polarity": "positif" }],
+    "highlight": true
+  },
+  {
+    "id": "cp-053",
+    "date": "1934-03-18",
+    "source": {
+      "title": "La Croix audoise — édition du 18 mars 1934",
+      "url": "https://archives.example/croix-audoise/1934-03-18"
+    },
+    "content": "Diffamé acquitté, calomnié déshonoré. La presse noire a ses assises et son jury à elle.",
+    "subjects": [{ "topicId": "presse-scandale", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-054",
+    "date": "1934-03-26",
+    "source": {
+      "title": "Le Phare ligérien — édition du 26 mars 1934",
+      "url": "https://archives.example/phare-ligerien/1934-03-26"
+    },
+    "content": "Les trois défenseurs de M. Maréchal-Vantard demandent que la Chambre vote publiquement. La Chambre, qui promettait un scandale, aura sa comédie.",
+    "subjects": [{ "topicId": "presse-scandale", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-055",
+    "date": "1934-02-05",
+    "source": {
+      "title": "Le Phare ligérien — édition du 5 février 1934",
+      "url": "https://archives.example/phare-ligerien/1934-02-05"
+    },
+    "content": "À Valmurand, les femmes contribuables du cercle de la soie préparent une pétition de dix mille noms. Elles ne demandent pas la permission de frapper à la porte : elles comptent le jour où on la leur ouvrira.",
+    "subjects": [{ "topicId": "suffrage-femmes", "polarity": "positif" }],
+    "highlight": true
+  },
+  {
+    "id": "cp-056",
+    "date": "1934-02-19",
+    "source": {
+      "title": "La Croix audoise — édition du 19 février 1934",
+      "url": "https://archives.example/croix-audoise/1934-02-19"
+    },
+    "content": "Le vote de ménage ? Il faudrait encore savoir si l'on va désormais à la messe en votant. Une suffragiste à son foyer est un foyer qui délibère.",
+    "subjects": [{ "topicId": "suffrage-femmes", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-057",
+    "date": "1934-03-05",
+    "source": {
+      "title": "Le Républicain picard — édition du 5 mars 1934",
+      "url": "https://archives.example/republicain-picard/1934-03-05"
+    },
+    "content": "La proposition municipale revient devant la Chambre, portée par quatre-vingt-douze noms. Dix ans de remise n'abolissent pas dix ans de droit.",
+    "subjects": [{ "topicId": "suffrage-femmes", "polarity": "positif" }]
+  },
+  {
+    "id": "cp-058",
+    "date": "1934-03-15",
+    "source": {
+      "title": "La Lanterne cévenole — édition du 15 mars 1934",
+      "url": "https://archives.example/lanterne-cevenole/1934-03-15"
+    },
+    "content": "Les suffragistes se rassemblent, les antiféministes s'agitent, le texte dort : un printemps comme les autres au calendrier de la justice.",
+    "subjects": [{ "topicId": "suffrage-femmes", "polarity": "neutre" }]
+  },
+  {
+    "id": "cp-059",
+    "date": "1934-03-23",
+    "source": {
+      "title": "La Croix audoise — édition du 23 mars 1934",
+      "url": "https://archives.example/croix-audoise/1934-03-23"
+    },
+    "content": "Le Sénat a écarté la réforme : le bon sens est le dernier votant. Chacun gardera son chapeau et la famille son toit.",
+    "subjects": [{ "topicId": "suffrage-femmes", "polarity": "negatif" }]
+  },
+  {
+    "id": "cp-060",
+    "date": "1934-03-31",
+    "source": {
+      "title": "Le Phare ligérien — édition du 31 mars 1934",
+      "url": "https://archives.example/phare-ligerien/1934-03-31"
+    },
+    "content": "Rejetée par la haute chambre, la collecte du cercle de Valmurand reprend. Un droit refusé n'est qu'un droit remis, disent celles qui se lassaient d'attendre.",
+    "subjects": [{ "topicId": "suffrage-femmes", "polarity": "positif" }]
+  }
+]

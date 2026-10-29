@@ -1,0 +1,44 @@
+[
+  {
+    "id": "desarmement",
+    "label": "La crise du désarmement",
+    "featured": true,
+    "teaser": "Genoves quitte la table, la Chambre s'enflamme : qui désarmera le premier ?",
+    "description": "La conférence de Genoves sur la sécurité collective achoppe sur l'égalité des droits réclamée par les puissances vaincues. Depuis le retrait de la délégation borvalque, en décembre, chaque séance budgétaire devient l'occasion d'un règlement de comptes entre partisans d'une armée rafferemie et artisans d'un désarmement contrôlé.\n\nLa Chambre se divise en trois camps : ceux qui veulent voter le statut de la milice mobile, ceux qui n'y voient qu'un premier pas vers l'apaisement, et ceux qui dénoncent une amputation de la défense nationale. Les journaux, eux, tirent à boulets rouges des deux côtés — un accord signé à Genoves vaut tous les communiqués."
+  },
+  {
+    "id": "ligues",
+    "label": "La menace des ligues",
+    "featured": true,
+    "teaser": "Des cortèges uniformés en marge du trimestre — faut-il dissoudre ?",
+    "description": "Les rassemblements de la Solidarité Ferrande et du Feu Libre ont rythmé le trimestre : défilés aux flambeaux à Clermont-le-Forez, brassard du Feu Libre vendu jusqu'aux Halles. À chaque cortège sa provocation, à chaque provocation son interpellation à la tribune.\n\nLe débat est simple dans sa forme, brûlant dans son enjeu : la République doit-elle dissoudre les bandes armées avant qu'elles ne dictent leur loi, ou préserver une liberté de réunion que les décrets-lois restrictent déjà assez ? Les journaux nationalistes dénoncent des « patriotes molestés » ; les journaux radicaux comptent les cartouches ramassées."
+  },
+  {
+    "id": "foire-aux-valeurs",
+    "label": "La foire aux valeurs",
+    "featured": true,
+    "teaser": "Les dettes de guerre s'échangent à hue et à dia — la Bourse tremble.",
+    "description": "Le règlement interallié des dettes de guerre, assorti d'un vote sur les crédits de consolidation, a livré la place de Bourse à une spéculation furieuse : les rentes des manufactures d'armement montent quand l'emprunt consolidé descend, et personne ne jurerait plus du prix de rien.\n\nLa commission des comptes accuse les marchands de banque de « jouer la peur » ; la gauche accuse la commission d'en être l'almanach. Entre deux coulisses, le petit porteur compte ses coupons — et lit les journaux, qui font et défont les cours à grand renfort de cancan."
+  },
+  {
+    "id": "budget",
+    "label": "Le budget et les décrets-lois",
+    "featured": false,
+    "teaser": "Rigueur budgétaire contre pain des travailleurs : le budget s'invite partout.",
+    "description": "Le ministère revendique un redressement des finances par l'économie et l'ordre ; l'opposition y voit un budget de compressions qui frappe les fonctionnaires modestes et les pensionnés. Faute de session claire, le gouvernement gouverne par décrets-lois, ce qui n'arrange rien.\n\nChaque chapitre budgétaire devient un plébiscite : crédits des monuments historiques supprimés, traitement des instituteurs gelé, majoration des taxes sur les spectacles. Les journaux titrent sur le « carnet de dépenses » du contribuable comme sur celui du ménage."
+  },
+  {
+    "id": "presse-scandale",
+    "label": "Presse et scandale",
+    "featured": false,
+    "teaser": "L'affaire Maréchal-Vantard : un dossier, dix feuilles, zéro scrupule.",
+    "description": "L'affaire Maréchal-Vantard — ce fournisseur de la poudrerie payé deux fois et défendu par trois députés — a tourné les journaux les uns contre les autres : le Torchon lorrain publie des bordereaux, La Croix audoise jure qu'ils sont faux, et les intéressés portent plainte pour diffamation.\n\nLe procès en diffamation du rédacteur en chef du Torchon, attendu à Vergy, est devenu l'alibi de tous les débats : parler de presse, c'est parler du scandale ; parler du scandale, c'est parler de la presse. La Chambre elle-même en vient aux quolibets de cancan."
+  },
+  {
+    "id": "suffrage-femmes",
+    "label": "Le suffrage des femmes",
+    "featured": false,
+    "teaser": "Proposé, repoussé, redemandé : le vote des femmes revient chaque saison.",
+    "description": "La proposition de réforme accordant le vote municipal aux femmes-contribuables est revenue devant la Chambre comme une habitude. Elle est repoussée une nouvelle fois par le Sénat, au grand dépit des cercles féminins de Valmurand et des radicaux qui avaient déposé le texte.\n\nLe trimestre a vu la question déborder des commissions : interpellations en séance, lettres ouvertes aux journaux, contre-pétitions. Les journaux catholiques y voient une question de clocher ; les feuilles radicales, une justice qui tarde depuis dix ans."
+  }
+]

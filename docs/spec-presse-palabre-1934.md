@@ -81,14 +81,14 @@ Routes (ajoutées au registre d'`App.tsx`, basename déjà géré) :
 
 ### Filtres (état dans l'URL, `useSearchParams`)
 
-| Param    | Valeurs                          | Défaut | Effet                       |
-| -------- | -------------------------------- | ------ | --------------------------- |
-| `sujet`  | (via chemin `/sujet/:id`)        | —      | —                           |
-| `type`   | `tout\|presse\|parlement`        | `tout` | couloirs scatter + liste    |
-| `orateur`| nom de locuteur, multi (`=` répété) | —   | liste + scatter             |
-| `journal`| nom de journal, multi            | —      | liste + scatter             |
-| `du`, `au`| date ISO                       | bornes du trimestre | fenêtrage scatter/bar/liste |
-| `doc`    | id de document                   | —      | ouvre le détail             |
+| Param      | Valeurs                             | Défaut              | Effet                       |
+| ---------- | ----------------------------------- | ------------------- | --------------------------- |
+| `sujet`    | (via chemin `/sujet/:id`)           | —                   | —                           |
+| `type`     | `tout\|presse\|parlement`           | `tout`              | couloirs scatter + liste    |
+| `orateur`  | nom de locuteur, multi (`=` répété) | —                   | liste + scatter             |
+| `journal`  | nom de journal, multi               | —                   | liste + scatter             |
+| `du`, `au` | date ISO                            | bornes du trimestre | fenêtrage scatter/bar/liste |
+| `doc`      | id de document                      | —                   | ouvre le détail             |
 
 Tous les filtres survivent au rechargement et sont partageables ; les graphiques réagissent aux filtres.
 

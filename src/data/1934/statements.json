@@ -1,0 +1,340 @@
+[
+  {
+    "id": "pd-001",
+    "date": "1934-01-03",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 3 janvier 1934", "url": null },
+    "content": "« Le protocole signé à Genoves ne désarme pas le pays : il le règle. » — M. Aurélien Duscher, sous-secrétaire d'État à la défense nationale. (Applaudissements au centre et à gauche.)",
+    "speaker": { "name": "Aurélien Duscher", "chamber": "chambre" },
+    "subjects": [{ "topicId": "desarmement", "polarity": "positif" }]
+  },
+  {
+    "id": "pd-002",
+    "date": "1934-01-05",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 5 janvier 1934", "url": null },
+    "content": "« M. le sous-secrétaire d'État désarme en phrases ; nos frontières, elles, se désarment en faits. » — M. Gédéon Pujol. (Bruit à droite.)",
+    "speaker": { "name": "Gédéon Pujol", "chamber": "chambre" },
+    "subjects": [{ "topicId": "desarmement", "polarity": "negatif" }]
+  },
+  {
+    "id": "pd-003",
+    "date": "1934-01-09",
+    "source": { "title": "Compte rendu de la séance du Sénat du 9 janvier 1934", "url": null },
+    "content": "« La parole donnée à Genoves vaut plus que toutes les mobilisations : tenue, elle dispense de la force ; reprise, elle la rend nécessaire. » — M. Ozias Templeux. (Très bien ; applaudissements.)",
+    "speaker": { "name": "Ozias Templeux", "chamber": "senat" },
+    "subjects": [{ "topicId": "desarmement", "polarity": "positif" }]
+  },
+  {
+    "id": "pd-004",
+    "date": "1934-01-11",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 11 janvier 1934", "url": null },
+    "content": "« Hier, à Clermont-le-Forez, on a marché par cinq de front, torches en tête, cartouches en poche. Une République qui tolère ces cortèges a commencé de se dissoudre elle-même. » — M. Sylvain Estallon. (Vives interruptions à droite.)",
+    "speaker": { "name": "Sylvain Estallon", "chamber": "chambre" },
+    "subjects": [{ "topicId": "ligues", "polarity": "negatif" }]
+  },
+  {
+    "id": "pd-005",
+    "date": "1934-01-14",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 14 janvier 1934", "url": null },
+    "content": "« Vous supprimez, par décret-loi, la chaire d'un jeune maître de Vergy, et vous gravez dans le marbre le salon du ministre sur le même papier. La rigueur, oui — mais laquelle, et pour qui ? » — M. Camille Rouveur.",
+    "speaker": { "name": "Camille Rouveur", "chamber": "chambre" },
+    "subjects": [{ "topicId": "budget", "polarity": "negatif" }]
+  },
+  {
+    "id": "pd-006",
+    "date": "1934-01-16",
+    "source": { "title": "Compte rendu de la séance du Sénat du 16 janvier 1934", "url": null },
+    "content": "« Vous avez fait de la dette du pays un jouet de coulisse. On marchande à la Bourse les créances de nos morts comme on marchanderait du cuir. » — M. Anselme Crocquefer.",
+    "speaker": { "name": "Anselme Crocquefer", "chamber": "senat" },
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "negatif" }]
+  },
+  {
+    "id": "pd-007",
+    "date": "1934-01-18",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 18 janvier 1934", "url": null },
+    "content": "« Vous dites des manifestants ; je dis des pèlerins de la détresse. Ceux qui ramassent les blessés de Clermont n'ont pas de leçon à nous donner en matière d'ordre. » — M. Gédéon Pujol. (Vif mouvement à droite.)",
+    "speaker": { "name": "Gédéon Pujol", "chamber": "chambre" },
+    "subjects": [{ "topicId": "ligues", "polarity": "positif" }]
+  },
+  {
+    "id": "pd-008",
+    "date": "1934-01-23",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 23 janvier 1934", "url": null },
+    "content": "« Votez les crédits de Genoves pleins poumons : ce que vous épargnez sur le canon ne se dépense plus en cercueil. » — M. Camille Rouveur. (Sourires ; applaudissements à gauche.)",
+    "speaker": { "name": "Camille Rouveur", "chamber": "chambre" },
+    "subjects": [
+      { "topicId": "desarmement", "polarity": "positif" },
+      { "topicId": "budget", "polarity": "neutre" }
+    ]
+  },
+  {
+    "id": "pd-009",
+    "date": "1934-01-25",
+    "source": { "title": "Compte rendu de la séance du Sénat du 25 janvier 1934", "url": null },
+    "content": "« La Bourse se trompe, mais elle ne ment point : l'emprunt de consolidation, discuté librement, est souscrit ; traqué, il s'enfuit. » — M. Prosper Bavouze.",
+    "speaker": { "name": "Prosper Bavouze", "chamber": "senat" },
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "positif" }]
+  },
+  {
+    "id": "pd-010",
+    "date": "1934-01-29",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 29 janvier 1934", "url": null },
+    "content": "« Vous gelez le traitement du facteur, vous taxez le spectacle de l'ouvrier, et vous appelez cela l'équilibre. J'appelle cela la loi d'exception des petits. » — M. Sylvain Estallon.",
+    "speaker": { "name": "Sylvain Estallon", "chamber": "chambre" },
+    "subjects": [{ "topicId": "budget", "polarity": "negatif" }]
+  },
+  {
+    "id": "pd-011",
+    "date": "1934-01-31",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 31 janvier 1934", "url": null },
+    "content": "« On peut haïr le Torchon lorrain ; on ne peut pas déclarer ses bordereaux faux sans dire pourquoi. La vérité n'est pas un scandale — c'est votre comptabilité. » — M. Camille Rouveur. (Interruptions à droite.)",
+    "speaker": { "name": "Camille Rouveur", "chamber": "chambre" },
+    "subjects": [{ "topicId": "presse-scandale", "polarity": "positif" }]
+  },
+  {
+    "id": "pd-012",
+    "date": "1934-02-02",
+    "source": { "title": "Compte rendu de la séance du Sénat du 2 février 1934", "url": null },
+    "content": "« La ligue en cortège n'est pas une opinion : c'est une embuscade en chemin. La campagne les redoute plus qu'elle ne les approuve. » — M. Anselme Crocquefer.",
+    "speaker": { "name": "Anselme Crocquefer", "chamber": "senat" },
+    "subjects": [{ "topicId": "ligues", "polarity": "negatif" }]
+  },
+  {
+    "id": "pd-013",
+    "date": "1934-02-06",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 6 février 1934", "url": null },
+    "content": "« Un budget qui contente tout le monde est un budget qui ment à tout le monde. Celui-ci est rude, mais il sauve notre signature au dehors. » — M. Aurélien Duscher.",
+    "speaker": { "name": "Aurélien Duscher", "chamber": "chambre" },
+    "subjects": [{ "topicId": "budget", "polarity": "positif" }]
+  },
+  {
+    "id": "pd-014",
+    "date": "1934-02-08",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 8 février 1934", "url": null },
+    "content": "« L'affaire de la poudrerie regarde la justice ; mais votre torchon sent plus qu'il n'éclaire. Quand une feuille fait chanter la diffamation sous couleur de lumière, ce n'est plus un torchon, c'est un chandelier. » — M. Gédéon Pujol. (Protestations vives à gauche.)",
+    "speaker": { "name": "Gédéon Pujol", "chamber": "chambre" },
+    "subjects": [{ "topicId": "presse-scandale", "polarity": "negatif" }],
+    "highlight": true
+  },
+  {
+    "id": "pd-015",
+    "date": "1934-02-09",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 9 février 1934", "url": null },
+    "content": "« Elles payent l'impôt du sang et l'impôt du marc : qu'elles jettent le bulletin. Le vote municipal pour les femmes n'est pas une grâce, c'est une restitution. » — M. Sylvain Estallon.",
+    "speaker": { "name": "Sylvain Estallon", "chamber": "chambre" },
+    "subjects": [{ "topicId": "suffrage-femmes", "polarity": "positif" }]
+  },
+  {
+    "id": "pd-016",
+    "date": "1934-02-13",
+    "source": { "title": "Compte rendu de la séance du Sénat du 13 février 1934", "url": null },
+    "content": "« La délégation borvalque a quitté la table ; elle n'a pas quitté l'Europe. C'est l'heure de signer précisément, pour ne pas lui fermer la porte au dos. » — M. Ozias Templeux.",
+    "speaker": { "name": "Ozias Templeux", "chamber": "senat" },
+    "subjects": [{ "topicId": "desarmement", "polarity": "positif" }]
+  },
+  {
+    "id": "pd-017",
+    "date": "1934-02-15",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 15 février 1934", "url": null },
+    "content": "« La même maison qui consolide la dette du riche marchand ampute la pension du soldat. On fait la moisson à la Bourse, et la loi à sa suite. » — M. Camille Rouveur.",
+    "speaker": { "name": "Camille Rouveur", "chamber": "chambre" },
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "negatif" }]
+  },
+  {
+    "id": "pd-018",
+    "date": "1934-02-18",
+    "source": { "title": "Compte rendu de la séance du Sénat du 18 février 1934", "url": null },
+    "content": "« Vos décrets-lois contentent les guichetiers et blessent le village. Une République qui fait des économies sur ses maîtres d'école a trouvé son compte ; elle n'a pas encore trouvé son âme. » — M. Marcellin Vaux.",
+    "speaker": { "name": "Marcellin Vaux", "chamber": "senat" },
+    "subjects": [{ "topicId": "budget", "polarity": "negatif" }]
+  },
+  {
+    "id": "pd-019",
+    "date": "1934-02-20",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 20 février 1934", "url": null },
+    "content": "« La ligue est un parti armé contre la loi qu'elle prétend servir. Le gouvernement dissoudra les bandes et en poursuivera les comptes. » — M. Aurélien Duscher. (Applaudissements à gauche.)",
+    "speaker": { "name": "Aurélien Duscher", "chamber": "chambre" },
+    "subjects": [{ "topicId": "ligues", "polarity": "negatif" }]
+  },
+  {
+    "id": "pd-020",
+    "date": "1934-02-22",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 22 février 1934", "url": null },
+    "content": "« Dissoudre ! On parle de dissoudre comme d'autres de purger. La Solidarité Ferrande compte douze mille adhérents : où les mettrez-vous, dans la Bastille de vos budgets ? » — M. Gédéon Pujol. (Vif mouvement à droite.)",
+    "speaker": { "name": "Gédéon Pujol", "chamber": "chambre" },
+    "subjects": [{ "topicId": "ligues", "polarity": "positif" }],
+    "highlight": true
+  },
+  {
+    "id": "pd-021",
+    "date": "1934-02-26",
+    "source": { "title": "Compte rendu de la séance du Sénat du 26 février 1934", "url": null },
+    "content": "« J'ai défendu la Bourse, non ses charlatans. Sous prétexte de consolider, certaines maisons ont accaparé les valeurs d'armement et ri du cours. » — M. Prosper Bavouze.",
+    "speaker": { "name": "Prosper Bavouze", "chamber": "senat" },
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "negatif" }]
+  },
+  {
+    "id": "pd-022",
+    "date": "1934-02-27",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 27 février 1934", "url": null },
+    "content": "« On fera du procès du Torchon un procès d'exemple. Faut-il le vouloir : les bordereaux de la poudrerie seront sur le banc des juges, peu importe celui du banc des prévenus. » — M. Sylvain Estallon.",
+    "speaker": { "name": "Sylvain Estallon", "chamber": "chambre" },
+    "subjects": [{ "topicId": "presse-scandale", "polarity": "positif" }]
+  },
+  {
+    "id": "pd-023",
+    "date": "1934-03-01",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 1er mars 1934", "url": null },
+    "content": "« Voilà dix ans que nous proposons, dix ans que vous remettez. Les femmes de Valmurand ne demandent pas vos compliments, elles demandent vos urnes. » — M. Camille Rouveur.",
+    "speaker": { "name": "Camille Rouveur", "chamber": "chambre" },
+    "subjects": [{ "topicId": "suffrage-femmes", "polarity": "positif" }]
+  },
+  {
+    "id": "pd-024",
+    "date": "1934-03-04",
+    "source": { "title": "Compte rendu de la séance du Sénat du 4 mars 1934", "url": null },
+    "content": "« Pour équilibrer le budget vous avez troublé la Bourse ; pour calmer la Bourse vous avez troublé le petit rentier. Voilà le double compte de votre rigueur. » — M. Anselme Crocquefer.",
+    "speaker": { "name": "Anselme Crocquefer", "chamber": "senat" },
+    "subjects": [
+      { "topicId": "budget", "polarity": "negatif" },
+      { "topicId": "foire-aux-valeurs", "polarity": "negatif" }
+    ]
+  },
+  {
+    "id": "pd-025",
+    "date": "1934-03-06",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 6 mars 1934", "url": null },
+    "content": "« On dit que j'ai signé le protocole de Genoves contre mon gré : je l'ai signé avec mon cœur. Une Europe armée qui négocie est un continent en route vers la raison. » — M. Aurélien Duscher.",
+    "speaker": { "name": "Aurélien Duscher", "chamber": "chambre" },
+    "subjects": [{ "topicId": "desarmement", "polarity": "positif" }]
+  },
+  {
+    "id": "pd-026",
+    "date": "1934-03-08",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 8 mars 1934", "url": null },
+    "content": "« Le protocole de Genoves est une feuille de papier contre une batterie de canons : le jour où l'encre sèche, il ne reste que l'encre. » — M. Gédéon Pujol. (Bruit à droite.)",
+    "speaker": { "name": "Gédéon Pujol", "chamber": "chambre" },
+    "subjects": [{ "topicId": "desarmement", "polarity": "negatif" }],
+    "highlight": true
+  },
+  {
+    "id": "pd-027",
+    "date": "1934-03-11",
+    "source": { "title": "Compte rendu de la séance du Sénat du 11 mars 1934", "url": null },
+    "content": "« L'ordre et la lumière commandent la même loi pour tous : dissolution des bandes armées, publication des bordereaux. Ce que l'on refuse aux uns, on le doit aux autres. » — M. Marcellin Vaux.",
+    "speaker": { "name": "Marcellin Vaux", "chamber": "senat" },
+    "subjects": [
+      { "topicId": "ligues", "polarity": "negatif" },
+      { "topicId": "presse-scandale", "polarity": "neutre" }
+    ]
+  },
+  {
+    "id": "pd-028",
+    "date": "1934-03-13",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 13 mars 1934", "url": null },
+    "content": "« Les valeurs d'armement ont monté de trente pour cent depuis l'ouverture de la session. Interpellez les ministres : chaque main levée à la tribune fait monter une cote. » — M. Camille Rouveur. (Interruptions.)",
+    "speaker": { "name": "Camille Rouveur", "chamber": "chambre" },
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "negatif" }]
+  },
+  {
+    "id": "pd-029",
+    "date": "1934-03-15",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 15 mars 1934", "url": null },
+    "content": "« Vous imposez des sacrifices : soit. Commencez par les gros estomacs et par les sinécures de Genoves ; vous viendrez ensuite prêcher la rigueur au facteur, qui gagne son pain à un sou la lettre. » — M. Sylvain Estallon.",
+    "speaker": { "name": "Sylvain Estallon", "chamber": "chambre" },
+    "subjects": [{ "topicId": "budget", "polarity": "negatif" }],
+    "highlight": true
+  },
+  {
+    "id": "pd-030",
+    "date": "1934-03-18",
+    "source": { "title": "Compte rendu de la séance du Sénat du 18 mars 1934", "url": null },
+    "content": "« Nous ne sommes pas ici pour juger le Torchon ni ses ennemis. Le Sénat doit attendre le tribunal et regarder les comptes de la poudrerie. » — M. Ozias Templeux.",
+    "speaker": { "name": "Ozias Templeux", "chamber": "senat" },
+    "subjects": [{ "topicId": "presse-scandale", "polarity": "neutre" }]
+  },
+  {
+    "id": "pd-031",
+    "date": "1934-03-20",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 20 mars 1934", "url": null },
+    "content": "« On donnera le vote aux femmes — et demain aux chevaux, pourvu qu'ils soient bien nés. Le royaume de la femme est le foyer ; n'en faites pas une électrice de caserne. » — M. Gédéon Pujol. (Rires ; protestations.)",
+    "speaker": { "name": "Gédéon Pujol", "chamber": "chambre" },
+    "subjects": [{ "topicId": "suffrage-femmes", "polarity": "negatif" }],
+    "highlight": true
+  },
+  {
+    "id": "pd-032",
+    "date": "1934-03-22",
+    "source": { "title": "Compte rendu de la séance du Sénat du 22 mars 1934", "url": null },
+    "content": "« On a hué, au Palais-Lucien, les suffragistes ; on les a ensuite éconduits avec les formes. Le Sénat les a entendues ; le Sénat les entendra encore. » — M. Marcellin Vaux.",
+    "speaker": { "name": "Marcellin Vaux", "chamber": "senat" },
+    "subjects": [{ "topicId": "suffrage-femmes", "polarity": "positif" }]
+  },
+  {
+    "id": "pd-033",
+    "date": "1934-03-23",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 23 mars 1934", "url": null },
+    "content": "« Les comptes se ferment sur un excédent que l'opposition elle-même n'a pas osé contester. Le pays peut respirer : votre rigueur a son terme et son but. » — M. Aurélien Duscher.",
+    "speaker": { "name": "Aurélien Duscher", "chamber": "chambre" },
+    "subjects": [{ "topicId": "budget", "polarity": "positif" }]
+  },
+  {
+    "id": "pd-034",
+    "date": "1934-03-25",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 25 mars 1934", "url": null },
+    "content": "« Je ne préjugerai point du protocole avant que la commission de contrôle ait dit son avis. Nous vérifierons les textes, avant de les louer ou de les plaindre. » — M. Camille Rouveur.",
+    "speaker": { "name": "Camille Rouveur", "chamber": "chambre" },
+    "subjects": [{ "topicId": "desarmement", "polarity": "neutre" }]
+  },
+  {
+    "id": "pd-035",
+    "date": "1934-03-26",
+    "source": { "title": "Compte rendu de la séance du Sénat du 26 mars 1934", "url": null },
+    "content": "« Un excédent bâti sur les payements remis et sur les avances déguisées n'est pas un excédent : c'est une queue d'arriéré que la postérité paye. » — M. Prosper Bavouze.",
+    "speaker": { "name": "Prosper Bavouze", "chamber": "senat" },
+    "subjects": [{ "topicId": "budget", "polarity": "negatif" }]
+  },
+  {
+    "id": "pd-036",
+    "date": "1934-03-27",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 27 mars 1934", "url": null },
+    "content": "« Le cercle de Valmurand a remis trois mille signatures depuis la dernière séance. Chaque jour de remise est un arriéré que vous ne rachetez point. » — M. Sylvain Estallon.",
+    "speaker": { "name": "Sylvain Estallon", "chamber": "chambre" },
+    "subjects": [{ "topicId": "suffrage-femmes", "polarity": "positif" }]
+  },
+  {
+    "id": "pd-037",
+    "date": "1934-03-28",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 28 mars 1934", "url": null },
+    "content": "« La commission de contrôle l'a établi : les clauses de Genoves mordent comme promis. Qui dénonce donc le protocole aujourd'hui dénonce la vérification. » — M. Camille Rouveur. (Applaudissements à gauche.)",
+    "speaker": { "name": "Camille Rouveur", "chamber": "chambre" },
+    "subjects": [{ "topicId": "desarmement", "polarity": "positif" }]
+  },
+  {
+    "id": "pd-038",
+    "date": "1934-03-29",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 29 mars 1934", "url": null },
+    "content": "« On vérifie les textes, on vérifie les cottes, on vérifie tout excepté les fonderies de l'étranger, qui ne se vérifient pas : elles produisent. » — M. Gédéon Pujol.",
+    "speaker": { "name": "Gédéon Pujol", "chamber": "chambre" },
+    "subjects": [{ "topicId": "desarmement", "polarity": "negatif" }]
+  },
+  {
+    "id": "pd-039",
+    "date": "1934-03-30",
+    "source": { "title": "Compte rendu de la séance du Sénat du 30 mars 1934", "url": null },
+    "content": "« Il ne suffit pas de faire la loi à la Bourse, il faut encore lui faire l'aumône : la consolidation est souscrite, oui — mais à quel prix, et pour qui les courtages ? » — M. Prosper Bavouze.",
+    "speaker": { "name": "Prosper Bavouze", "chamber": "senat" },
+    "subjects": [{ "topicId": "foire-aux-valeurs", "polarity": "negatif" }]
+  },
+  {
+    "id": "pd-040",
+    "date": "1934-03-31",
+    "source": { "title": "Compte rendu de la séance de la Chambre du 31 mars 1934", "url": null },
+    "content": "« La consolidation passe, l'excédent se ferme : le crédit du pays est rétabli. Cela vaut bien une séance de chicane. » — M. Aurélien Duscher. (Applaudissements au centre. La séance est levée.)",
+    "speaker": { "name": "Aurélien Duscher", "chamber": "chambre" },
+    "subjects": [
+      { "topicId": "foire-aux-valeurs", "polarity": "positif" },
+      { "topicId": "budget", "polarity": "positif" }
+    ],
+    "highlight": true
+  }
+]
