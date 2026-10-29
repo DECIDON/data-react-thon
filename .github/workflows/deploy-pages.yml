@@ -1,0 +1,53 @@
+# Déploiement continu sur GitHub Pages (hosting statique, architecture.md §build).
+# Mêmes conventions que ci.yml : permissions minimales, actions épinglées par SHA.
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: build (vite · fallback SPA)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # Base relative pour un Pages « projet » (/data-react-thon/) ; lu par vite.config.ts.
+      - run: npm run build
+        env:
+          VITE_BASE_PATH: /${{ github.event.repository.name }}/
+      # Fallback SPA : GitHub Pages sert 404.html sur les URLs inconnues.
+      # Fichier généré, propre à l'artefact publié : absent du dépôt ET du `npm run build` local.
+      - name: Fallback SPA (dist/404.html)
+        run: cp dist/index.html dist/404.html
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: dist
+
+  deploy:
+    name: deploy (github-pages)
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

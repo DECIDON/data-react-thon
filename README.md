@@ -5,6 +5,9 @@ socle technique posé, **page unique « Hello World »**. Le projet démarre à 
 foundation ; les couches métier (données, orchestration, i18n) seront ajoutées au premier besoin réel,
 pas avant (proportionnalité D-004 — tout report est consigné dans [`BOOTSTRAP-REPORT.md`](BOOTSTRAP-REPORT.md)).
 
+En ligne : <https://decidon.github.io/data-react-thon/> — déployé automatiquement sur GitHub Pages à chaque
+push sur `main` (`.github/workflows/deploy-pages.yml`).
+
 ## Prérequis
 
 - Node **22 LTS** (`engines` + `packageManager` épinglés dans `package.json`).
