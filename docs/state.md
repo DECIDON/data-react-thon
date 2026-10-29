@@ -9,8 +9,9 @@ Règle invariante : tout état métier naît dans la base locale + hook d'abonne
 | Filtres & sujet actif (R9)           | URL (`searchParams` react-router) | navigateur   | survit au rechargement, partageable | aucune persistance |
 
 > Ligne de R9 posée **avant** le code (règle du fichier : aucune ligne sans état ; ici la ligne
-> est l'engagement préalable) : les filtres et le sujet actif n'existent pas encore, ils seront
-> posés en 9.4 dans l'URL — pas de store, pas de localStorage (spec §4, C-007).
+> est l'engagement préalable) : les filtres et le sujet actif n'existaient pas encore. Le jour retenu
+> de l'accueil est posé en 9.3 (`?jour=YYYY-MM-DD`) ; les filtres de la page sujet suivront en 9.4 —
+> toujours dans l'URL, jamais de store, jamais de localStorage (spec §4, C-007).
 
 ## Réservations connues (engagements, pas implémentations)
 

@@ -24,6 +24,7 @@
     "verify": "node scripts/generate-env.mjs && tsc -b && vitest run && eslint . && prettier --check . && node scripts/eslint-ratchet.mjs"
   },
   "dependencies": {
+    "@nivo/calendar": "^0.99.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-router": "^7.0.0",
