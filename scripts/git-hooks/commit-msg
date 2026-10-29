@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Conventional Commits (CONVENTIONS.md « Git & contributions »).
+set -euo pipefail
+
+MSG_FILE=$1
+FIRST_LINE=$(head -n 1 "$MSG_FILE")
+
+if ! printf '%s' "$FIRST_LINE" | grep -Eq '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([^\)]+\))?!?: .+'; then
+  # Les commits de fusion git et les reverts automatiques restent admis.
+  case "$FIRST_LINE" in
+    Merge*|Revert*|fixup!*|squash!) exit 0 ;;
+  esac
+  echo "Commit refusé : message non conforme aux Conventional Commits." >&2
+  echo "  attendu : type(scope)?: description  (ex. feat(quiz): ajoute la validation des réponses)" >&2
+  echo "  types   : feat fix docs style refactor perf test build ci chore revert" >&2
+  exit 1
+fi

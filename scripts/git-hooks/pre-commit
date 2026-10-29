@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Hook anti-secrets (S-11) : refuse tout diff stagé qui contient un motif de secret plausible.
+# Activé par `git config core.hooksPath scripts/git-hooks` (documenté dans docs/developpement.md).
+set -euo pipefail
+
+PATTERNS=(
+  'AKIA[0-9A-Z]{16}'
+  '\-\-\-\-\-BEGIN [A-Z ]*PRIVATE KEY\-\-\-\-\-'
+  '(api[_-]?key|secret|password|passwd|token)[a-zA-Z0-9_-]*\s*[:=]\s*["'"'"'][^"'"'"' ]{12,}'
+  'ghp_[0-9A-Za-z]{36}'
+  'github_pat_[0-9A-Za-z]{50,}'
+  'xox[bpasr]-[0-9A-Za-z-]{20,}'
+)
+
+STAGED=$(git diff --cached -U0 --no-color || true)
+if [ -z "$STAGED" ]; then
+  exit 0
+fi
+
+for pattern in "${PATTERNS[@]}"; do
+  if matches=$(printf '%s\n' "$STAGED" | grep -E "^\+.*$pattern" | grep -vE 'example|exemple|changeme|fake|dummy|\*\*\*' || true); [ -n "$matches" ]; then
+    printf 'Hook anti-secrets : motif détecté (%s)\n%s\n' "$pattern" "$matches" >&2
+    printf 'Abort. Si cest un faux positif, relance avec --no-verify (à assumer en revue).\n' >&2
+    exit 1
+  fi
+done
+
+exit 0

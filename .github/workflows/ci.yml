@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  pull_request:
+  workflow_call:
+
+# CI-CD.md : permissions minimales, concurrency cancel, runtime épinglé, audit bloquant,
+# actions épinglées par SHA.
+permissions: {}
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: validate (tsc · vitest · prettier · eslint ratchet · audit)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # Commande de vérification locale = commande de CI (TESTING.md).
+      - run: npm run verify
+      - name: Audit bloquant (baseline 0 ; exceptions = PR commentée dans SECURITY.md)
+        run: npm run audit:prod
+
+  e2e:
+    name: e2e (chromium)
+    needs: validate
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Installer chromium
+        run: npx playwright install --with-deps chromium
+      - name: Fumée (le webserver Playwright construit et sert lui-même l'app)
+        run: npx playwright test
+      # Rapport au premier échec seulement, rétention courte (CI-CD.md).
+      - name: Rapport Playwright
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

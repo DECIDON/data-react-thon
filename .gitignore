@@ -1,0 +1,17 @@
+node_modules
+dist
+*.local
+
+# Secrets : jamais versionnés (S-11) ; seul .env.example est autorisé
+.env
+.env.*
+!.env.example
+
+# Artefacts générés au build
+public/version.json
+node_modules/.tmp
+*.tsbuildinfo
+coverage
+playwright-report
+test-results
+.eslintcache

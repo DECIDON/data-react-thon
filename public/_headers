@@ -1,0 +1,7 @@
+# En-têtes d'hébergeur statique (format Netlify ; Cloudflare Pages accepte l'équivalent).
+# Complète la meta CSP injectée au build (SECURITY.md S-03). Adapté si l'hébergeur retenu diffère.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
