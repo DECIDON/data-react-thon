@@ -38,6 +38,8 @@ export class BaseError extends Error {
 
 export class ConfigError extends BaseError {}
 export class UiError extends BaseError {}
+/** Échec de chargement/validité d'une source de donnée (port repository) : technique, jamais métier. */
+export class DataError extends BaseError {}
 
 function serializeCause(cause: unknown): unknown {
   if (cause instanceof Error) {

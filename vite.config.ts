@@ -46,7 +46,9 @@ export default defineConfig(({ mode }) => ({
     include: ['src/**/*.test.{ts,tsx}'],
     coverage: {
       provider: 'v8',
-      include: ['src/**'],
+      // Les seuls fichiers mesurables : les README/JSON font échouer le remap des source maps
+      // (bruit « Failed to parse », lignes de rapport perdues au gré des courses).
+      include: ['src/**/*.{ts,tsx}'],
       // Seuil ciblé sur le domaine pur (TESTING.md) ; pas de % global punitif.
       thresholds: { 'src/domain/**': { lines: 90, functions: 90, branches: 90, statements: 90 } },
     },
