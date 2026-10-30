@@ -34,6 +34,11 @@ parlent le même langage. Format imposé par la foundation : terme — définiti
   `_Avoid_ : « vedette », « mis en avant » (décris l'intention, pas le champ)._
 - **Miroir** — bloc d'une page de sujet qui met en regard le phare presse et le phare parlement du même
   sujet. `_Avoid_ : « face-à-face », « comparatif »._
+- **Couloir** — l'un des deux courants éditoriaux que suit un document : presse ou parlement (type
+  `Couloir` dans `domain/1934`, couloirs de la frise). À l'écran, on rend les mots du glossaire
+  (« Coupe de presse » / « Prise de parole »), pas le mot technique. `_Avoid_ : « colonne », « flux », « catégorie »._
+- **Registre** — l'ensemble des documents du trimestre tel qu'exposé au juré (« au registre du trimestre »).
+  `_Avoid_ : « base », « stock », « dataset » (le registre est fictif — cf. corpus fictif)._
 - **Corpus fictif** — jeu de données commissionné sous `src/data/1934/` : journaux, locuteurs et contenus
   inventés à saveur 1934, jamais de paroles fabriquées attribuées à des personnes réelles (ADR C-008).
   `_Avoid_ : « démo », « fake data », « mock » (le mock est en test, le corpus fictif est en prod du prototype)._

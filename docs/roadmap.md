@@ -22,14 +22,19 @@ données, jeu fictif, écrans, graphiques, tests). ADR C-007 (domaine), C-008 (f
 C-009 (Nivo). **Règle d'exécution : une étape = une session ; une session ne démarre que sur l'étape
 précédente mergée, `npm run verify` vert et ratchet non remonté.**
 
-| Étape | Contenu                                                                                      | Critère de sortie                                                                                                                               |
-| ----- | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| 9.1   | Contrat de données : types + schémas Zod dans `domain/`, corpus fictif dans `src/data/1934/` | 6 sujets (3 vitrine), ~40 prises / ~60 coupes conformes ; test de validation du corpus contre le schéma ; paire en polarités opposées par sujet |
-| 9.2   | Port repository (`data/`) + hooks de lecture (`hooks/data/`) + ligne dans `state.md`         | Hooks typés testés (sujets, documents par sujet, agrégats calendar/scatter/bar) ; frontières respectées                                         |
-| 9.3   | Accueil : `@nivo/calendar` Q1 1934 + cartes de sujets vitrine + bandeau « données fictives » | Route `/` rendue, clic sur un jour → liste des documents de ce jour ; tests composants (Nivo mocké)                                             |
-| 9.4   | Page sujet : phares, miroir, scatter (clic = sélection/filtre), bar mensuel, filtres en URL  | `/sujet/:id` ; tout filtre est codé dans l'URL et survit au rechargement ; bloc miroir par polarités opposées                                   |
-| 9.5   | Détail d'un document (volet ou route), snippet + source + polarités                          | Depuis scatter ou liste ; URL partageable                                                                                                       |
-| 9.6   | Fumée E2E du parcours juré (accueil → sujet → miroir → détail), à jour roadmap/`state.md`    | `e2e/` vert contre les libellés réels (C-006) ; R9 mergée                                                                                       |
+| Étape | Contenu                                                                                      | Critère de sortie                                                                                                                                     |
+| ----- | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 9.1   | Contrat de données : types + schémas Zod dans `domain/`, corpus fictif dans `src/data/1934/` | ✅ Close (`291b115`) : 6 sujets (3 vitrine), 40 prises / 60 coupes conformes ; corpus validé contre le schéma ; paire en polarités opposées par sujet |
+| 9.2   | Port repository (`data/`) + hooks de lecture (`hooks/data/`) + ligne dans `state.md`         | ✅ Close (`8a606dd`) : hooks typés testés (sujets, documents par sujet, agrégats calendar/scatter/bar) ; frontières respectées                        |
+| 9.3   | Accueil : `@nivo/calendar` Q1 1934 + cartes de sujets vitrine + bandeau « données fictives » | ✅ Close (`9bf16d1`) : route `/` rendue, clic sur un jour → liste des documents de ce jour ; tests composants (Nivo mocké)                            |
+| 9.4   | Page sujet : phares, miroir, scatter (clic = sélection/filtre), bar mensuel, filtres en URL  | ✅ Close (`4d16cdc`) : `/sujet/:id` ; tout filtre est codé dans l'URL et survit au rechargement ; bloc miroir par polarités opposées                  |
+| 9.5   | Détail d'un document (volet ou route), snippet + source + polarités                          | ✅ Close (`eb36977`) : depuis scatter ou liste ; URL partageable                                                                                      |
+| 9.6   | Fumée E2E du parcours juré (accueil → sujet → miroir → détail), à jour roadmap/`state.md`    | ✅ Close : parcours verrouillé par `e2e/parcours-jure.spec.ts`, fumée et parcours verts contre le build de prod (commit de closage de la tranche)     |
+
+**Tranche R9 close le 2026-10-30** (9.1 `291b115` → 9.6, HEAD `eb36977` avant closage). Le parcours juré de
+bout en bout est verrouillé en E2E sur libellés réels (C-006) ; la doc de couches est revenue au dernier
+état de vérité.
 
 R2 (Dexie) et R5 (imports) restent en attente : leur déclencheur — premier besoin d'écriture — n'est pas
-sonné (C-008).
+sonné (C-008). Rien dans R9 ne l'a fait sonner : le corpus 1934 est en lecture seule et l'état UI vit
+dans l'URL (`state.md`).

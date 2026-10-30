@@ -200,7 +200,7 @@ export function SujetPage() {
         </section>
       )}
 
-      <Miroir miroir={miroir} sujets={corpus.sujets} />
+      <Miroir miroir={miroir} sujets={corpus.sujets} surVoirDetail={(docId) => majFiltres({ doc: docId })} />
 
       <BarreDeFiltres
         filtres={filtres}

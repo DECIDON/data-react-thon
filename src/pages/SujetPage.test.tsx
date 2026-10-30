@@ -152,13 +152,13 @@ describe('SujetPage — parcours 9.4', () => {
     expect(liste).toHaveTextContent('Aucun document ne correspond aux filtres actifs.')
   })
 
-  it('le menu « Orateurs » est alimenté par les locuteurs réels du corpus', async () => {
+  it('le menu « Locuteurs » est alimenté par les locuteurs réels du corpus', async () => {
     const user = userEvent.setup()
     renduSujet('/sujet/desarmement')
     await user.click(
-      // Le mot « Orateurs » vit aussi dans la légende du fieldset : on cible le <summary>.
+      // Le mot « Locuteurs » vit aussi dans la légende du fieldset : on cible le <summary>.
       screen.getByText(
-        (_content, element) => element?.tagName === 'SUMMARY' && element.textContent === 'Orateurs',
+        (_content, element) => element?.tagName === 'SUMMARY' && element.textContent === 'Locuteurs',
       ),
     ) // : ouvre le panneau au clavier
     expect(screen.getByRole('checkbox', { name: 'Aurélien Duscher' })).toBeVisible()

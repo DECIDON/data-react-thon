@@ -115,7 +115,7 @@ export function BarreDeFiltres({ filtres, locuteurs, journaux, onChange }: Barre
           ))}
         </div>
         <MenuCases
-          titre="Orateurs"
+          titre="Locuteurs" // Le glossaire fait foi (« locuteur », jamais « orateur ») ; le param d'URL `orateur` reste le contrat de la spec §4.
           options={locuteurs}
           selection={filtres.orateurs}
           surBasculer={(nom) => basculerNom('orateurs', nom)}

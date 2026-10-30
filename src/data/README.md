@@ -7,8 +7,8 @@ en collections typées pour les hooks. Règle de frontière (ADR C-003) : `data/
 ## `data/1934/` — corpus fictif « presse & palabre » (ADR C-008)
 
 - `topics.json` — les 6 sujets du trimestre (3 en vitrine), seul lieu de définition des sujets.
-- `statements.json` — les prises de parole (`pd-0xx`), locuteurs et chambres fictifs.
-- `press.json` — les coupes de presse (`cp-0xx`), journaux fictifs à saveur 1934.
+- `statements.json` — les 40 prises de parole (`pd-0xx`), locuteurs et chambres fictifs.
+- `press.json` — les 60 coupes de presse (`cp-0xx`), journaux fictifs à saveur 1934.
 - `corpus.test.ts` — validation du corpus contre les schémas `domain/1934` + règles de commissionnement.
 - `repository.ts` — port repository : parse strict une fois (mémoïsé), corpus gelé en `FunctionResult`,
   sélecteurs dérivés (`sujetParId`, `documentsParSujet`, `journaux`, `locuteurs`) ; les hooks de lecture

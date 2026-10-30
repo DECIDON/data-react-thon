@@ -21,7 +21,7 @@ export function SujetsVitrine({ sujets, documents }: SujetsVitrineProps) {
     <div className="flex flex-col gap-8">
       <section aria-labelledby="sujets-titre" className="flex flex-col gap-4">
         <h2 id="sujets-titre" className="text-2xl font-semibold tracking-tight">
-          Sujets à la une
+          Sujets en vitrine
         </h2>
         <ul className="grid gap-4 sm:grid-cols-3">
           {vitrine.map((sujet) => {

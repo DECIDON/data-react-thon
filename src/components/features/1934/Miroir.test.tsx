@@ -1,5 +1,6 @@
 import type { Document1934, Sujet } from '@/domain/1934'
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import { Miroir } from './Miroir'
 
@@ -58,5 +59,27 @@ describe('Miroir', () => {
   it('miroir entièrement vide (sujet sans document) : deux messages, pas de crash', () => {
     render(<Miroir miroir={{}} sujets={sujets} />)
     expect(screen.getAllByText(/Aucun document de ce côté/)).toHaveLength(2)
+  })
+
+  it('raccord 9.6 : chaque moitié offre « voir le détail » et remonte l’id de SON document', async () => {
+    const vus: string[] = []
+    const user = userEvent.setup()
+    render(
+      <Miroir
+        miroir={{ presse: pharePresse, parlement: phareParlement }}
+        sujets={sujets}
+        surVoirDetail={(docId) => vus.push(docId)}
+      />,
+    )
+    const boutons = screen.getAllByRole('button', { name: 'voir le détail' })
+    expect(boutons).toHaveLength(2) // une porte par moitié, pas plus.
+    await user.click(boutons[0]!)
+    await user.click(boutons[1]!)
+    expect(vus).toEqual(['cp-003', 'pd-026']) // presse d'abord, chacun son document.
+  })
+
+  it('raccord 9.6 : sans callback, le bloc reste purement display (aucune porte d’entrée)', () => {
+    render(<Miroir miroir={{ presse: pharePresse, parlement: phareParlement }} sujets={sujets} />)
+    expect(screen.queryByRole('button', { name: 'voir le détail' })).toBeNull()
   })
 })

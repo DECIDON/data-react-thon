@@ -35,6 +35,6 @@ describe('HomePage — corpus en échec', () => {
     const alerte = screen.getByRole('alert')
     expect(alerte).toHaveTextContent('Le corpus 1934 n’a pas pu être chargé.')
     expect(alerte).toHaveTextContent('corpus volontairement invalide (brouette de test)')
-    expect(screen.queryByRole('heading', { name: 'Sujets à la une' })).toBeNull()
+    expect(screen.queryByRole('heading', { name: 'Sujets en vitrine' })).toBeNull()
   })
 })
