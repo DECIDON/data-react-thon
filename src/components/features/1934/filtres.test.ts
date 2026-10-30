@@ -60,19 +60,20 @@ describe('lireFiltresDepuisURL — validation tolérante', () => {
       du: '1934-01-01',
       au: '1934-03-31',
       doc: null,
+      frise: 'effectifs',
     })
   })
 
   it('URL trafiquée : tout est ignoré, rien ne crash', () => {
     const trafiquee = new URLSearchParams(
-      'type=banane&orateur=Napol%C3%A9on&orateur=&journal=Miroir+du+canard&du=1870-05-03&au=31&doc=<script>',
+      'type=banane&orateur=Napol%C3%A9on&orateur=&journal=Miroir+du+canard&du=1870-05-03&au=31&doc=<script>&frise=barometre',
     )
     expect(lireFiltresDepuisURL(trafiquee, listes)).toEqual(filtresParDefaut())
   })
 
   it('paramètres valides lus tels quels, multi répétés dédoublonnés et triés', () => {
     const params = new URLSearchParams(
-      'type=parlement&orateur=Camille+Rouveur&orateur=Aur%C3%A9lien+Duscher&orateur=Camille+Rouveur&du=1934-02-01&doc=cp-003',
+      'type=parlement&orateur=Camille+Rouveur&orateur=Aur%C3%A9lien+Duscher&orateur=Camille+Rouveur&du=1934-02-01&doc=cp-003&frise=parts',
     )
     expect(lireFiltresDepuisURL(params, listes)).toEqual({
       type: 'parlement',
@@ -81,6 +82,7 @@ describe('lireFiltresDepuisURL — validation tolérante', () => {
       du: '1934-02-01',
       au: '1934-03-31',
       doc: 'cp-003',
+      frise: 'parts',
     })
   })
 
@@ -109,9 +111,10 @@ describe('appliquerFiltres — écriture sans pollution', () => {
       du: '1934-01-01',
       au: '1934-02-28',
       doc: 'pd-002',
+      frise: 'parts',
     })
     expect(params.toString()).toBe(
-      'jour=1934-02-02&type=parlement&orateur=Aur%C3%A9lien+Duscher&orateur=Camille+Rouveur&journal=La+Croix+audoise&au=1934-02-28&doc=pd-002',
+      'jour=1934-02-02&type=parlement&orateur=Aur%C3%A9lien+Duscher&orateur=Camille+Rouveur&journal=La+Croix+audoise&au=1934-02-28&doc=pd-002&frise=parts',
     )
   })
 
@@ -123,6 +126,7 @@ describe('appliquerFiltres — écriture sans pollution', () => {
       du: '1934-01-10',
       au: '1934-03-31',
       doc: 'cp-001' as string | null,
+      frise: 'parts' as const,
     }
     expect(lireFiltresDepuisURL(appliquerFiltres(new URLSearchParams(), filtres), listes)).toEqual(filtres)
   })

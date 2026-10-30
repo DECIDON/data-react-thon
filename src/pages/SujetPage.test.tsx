@@ -106,6 +106,23 @@ describe('SujetPage — parcours 9.4', () => {
     )
   })
 
+  it('le segmented d’échelle pose ?frise=parts (les défauts ne polluent pas l’URL)', async () => {
+    const user = userEvent.setup()
+    renduSujet('/sujet/desarmement')
+    expect(screen.getByRole('button', { name: 'Effectifs absolus' })).toHaveAttribute('aria-pressed', 'true')
+    await user.click(screen.getByRole('button', { name: 'Parts relatives' }))
+    expect(urlCourante().textContent).toContain('frise=parts')
+    expect(screen.getByRole('button', { name: 'Parts relatives' })).toHaveAttribute('aria-pressed', 'true')
+    await user.click(screen.getByRole('button', { name: 'Effectifs absolus' }))
+    expect(urlCourante().textContent).not.toContain('frise')
+  })
+
+  it('lien profond ?frise=parts : le segmented est pressé dès l’arrivée', () => {
+    renduSujet('/sujet/desarmement?frise=parts')
+    expect(screen.getByRole('button', { name: 'Parts relatives' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: 'Effectifs absolus' })).toHaveAttribute('aria-pressed', 'false')
+  })
+
   it('lien profond ?doc= : la carte visée est ancrée et ciblée dès l’arrivée (rechargement)', () => {
     renduSujet('/sujet/desarmement?doc=cp-003')
     expect(screen.getByRole('button', { name: 'masquer le ciblage' })).toBeVisible()

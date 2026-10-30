@@ -227,7 +227,11 @@ export function SujetPage() {
         onChange={majFiltres}
       />
 
-      <Chronologie points={points} />
+      <Chronologie
+        points={points}
+        mode={filtres.frise}
+        surChangementMode={(frise) => majFiltres({ frise })}
+      />
 
       <BarMois series={seriesMensuelles} />
 

@@ -18,6 +18,7 @@ import {
 const points: PointChronologie[] = [
   { id: 'pd-001', date: '1934-01-03', lane: 'parlement', polarity: 'positif' },
   { id: 'pd-004', date: '1934-01-20', lane: 'parlement', polarity: 'positif' },
+  { id: 'cp-005', date: '1934-01-10', lane: 'presse', polarity: 'positif' },
   { id: 'cp-002', date: '1934-02-04', lane: 'presse', polarity: 'negatif' },
   { id: 'hors-sol', date: '1933-12-25', lane: 'presse', polarity: 'neutre' }, // hors période
 ]
@@ -32,23 +33,24 @@ describe('moisDeLaPeriode', () => {
   })
 })
 
-describe('versBandesChronologie', () => {
+describe('versBandesChronologie — mode effectifs (défaut)', () => {
   it('une bande par couple couloir × polarité présent, presse d’abord, ordre des polarités stable', () => {
     const series = versBandesChronologie(points)
-    expect(series.map((s) => s.id)).toEqual(['presse:negatif', 'parlement:positif'])
+    expect(series.map((s) => s.id)).toEqual(['presse:positif', 'presse:negatif', 'parlement:positif'])
   })
 
   it('compte par mois, padding de zéros sur toute la période : la bande traverse toutes les colonnes', () => {
     const series = versBandesChronologie(points)
+    // Le datum peint le compte (`y`), mais garde toujours le brut et la part pour l'infobulle.
     expect(series[0]?.data).toEqual([
-      { x: '1934-01', y: 0 },
-      { x: '1934-02', y: 1 },
-      { x: '1934-03', y: 0 },
+      { x: '1934-01', y: 1, compte: 1, part: 1 / 3 },
+      { x: '1934-02', y: 0, compte: 0, part: 0 },
+      { x: '1934-03', y: 0, compte: 0, part: 0 },
     ])
-    expect(series[1]?.data).toEqual([
-      { x: '1934-01', y: 2 },
-      { x: '1934-02', y: 0 },
-      { x: '1934-03', y: 0 },
+    expect(series[2]?.data).toEqual([
+      { x: '1934-01', y: 2, compte: 2, part: 2 / 3 },
+      { x: '1934-02', y: 0, compte: 0, part: 0 },
+      { x: '1934-03', y: 0, compte: 0, part: 0 },
     ])
   })
 
@@ -59,6 +61,29 @@ describe('versBandesChronologie', () => {
 
   it('lot vide : aucune bande (le composant affiche l’état vide)', () => {
     expect(versBandesChronologie([])).toEqual([])
+  })
+})
+
+describe('versBandesChronologie — mode parts', () => {
+  it('`y` devient la part du compte dans le total du mois ; janvier (3 docs) se répartit ⅓ / ⅔', () => {
+    const series = versBandesChronologie(points, 'parts')
+    expect(series[0]?.data[0]?.y).toBeCloseTo(1 / 3) // presse:positif, janvier
+    expect(series[2]?.data[0]?.y).toBeCloseTo(2 / 3) // parlement:positif, janvier
+  })
+
+  it('le brut survit (`compte`) et un mois seul dominant vaut 1 ; le mois vide reste à 0', () => {
+    const series = versBandesChronologie(points, 'parts')
+    expect(series[1]?.data).toEqual([
+      { x: '1934-01', y: 0, compte: 0, part: 0 },
+      { x: '1934-02', y: 1, compte: 1, part: 1 }, // seul document du mois de février
+      { x: '1934-03', y: 0, compte: 0, part: 0 },
+    ])
+  })
+
+  it('la somme des `y` d’une colonne remplie vaut 1 (chaque colonne à 100 %)', () => {
+    const series = versBandesChronologie(points, 'parts')
+    const janvier = series.reduce((somme, s) => somme + (s.data[0]?.y ?? 0), 0)
+    expect(janvier).toBeCloseTo(1)
   })
 })
 

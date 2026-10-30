@@ -20,7 +20,16 @@ import { PERIODE_1934 } from '@/domain/1934'
  * - **agrégat, plus de document** : le clic `?doc=` du scatterplot n'a plus de sens sous
  *   une bande (une bande couvre N documents) ; l'infobulle montre les comptes. Les couples
  *   sans document sont exclus : rien à peindre, rien à survoler.
+ * - **échelle commutable** (`ModeFrise`) : « effectifs » peint les comptes bruts — la
+ *   hauteur totale d'une colonne raconte donc aussi le volume du mois ; « parts » normalise
+ *   chaque colonne à 100 % — seule la répartition du mois se lit, les volumes entre mois
+ *   s'effacent. Le datum peint la valeur de l'échelle courante (`y`) mais conserve toujours
+ *   le compte brut (`compte`) et la part du mois (`part`) : l'infobulle ne ment jamais.
  */
+
+/** Échelle d'affichage de la frise : comptes bruts (défaut) ou parts relatives (chaque colonne à 100 %). */
+export const MODES_FRISE = ['effectifs', 'parts'] as const
+export type ModeFrise = (typeof MODES_FRISE)[number]
 
 /** Libellé français d'un couloir — sert d'étiquette de bande. */
 export const LIBELLE_COULOIR: Record<Couloir, string> = { presse: 'Presse', parlement: 'Parlement' }
@@ -62,10 +71,20 @@ export function libelleBande(serie: { id: string }): string {
   return serie.id // id imprévu : on l'affiche brut plutôt que de mentir.
 }
 
-/** Datum d'une colonne AreaBump : mois ISO (`YYYY-MM`) et compte de documents. */
-export interface DatumBandeChronologie {
+/**
+ * Datum d'une colonne AreaBump (alias, pas interface : Nivo l'examine structurellement) :
+ * `y` = valeur peinte selon l'échelle courante (compte brut, ou part 0–1) ; `compte` et
+ * `part` sont toujours là, l'infobulle rend le vrai quel que soit le mode.
+ */
+export type DatumBandeChronologie = {
+  /** Colonne : mois ISO `YYYY-MM`. */
   x: string
+  /** Valeur peinte : compte (mode effectifs) ou part du mois 0–1 (mode parts). */
   y: number
+  /** Compte brut de documents ce mois-là — toujours, même en mode parts. */
+  compte: number
+  /** Part du mois, 0–1 (0 si le mois est vide) — toujours, même en mode effectifs. */
+  part: number
 }
 
 /** Une série AreaBump : { id, data } (contrat `AreaBumpSerie` ; alias, pas interface : Nivo l'intersecte avec `Record<string, unknown>`). */
@@ -97,8 +116,12 @@ export function moisDeLaPeriode(du: string = PERIODE_1934.du, au: string = PERIO
  * Points du domaine → bandes couloir × polarité, zéros padding sur chaque mois de la
  * période. Un document compte une fois par association document×sujet (le point est déjà
  * émis par association, spec §2). Les couples sans aucun document sont exclus.
+ * En mode « parts », `y` est la part du compte dans le total du mois (le mois vide reste à 0).
  */
-export function versBandesChronologie(points: readonly PointChronologie[]): SerieBandeChronologie[] {
+export function versBandesChronologie(
+  points: readonly PointChronologie[],
+  mode: ModeFrise = 'effectifs',
+): SerieBandeChronologie[] {
   const mois = moisDeLaPeriode()
   const visibles = new Set(mois)
   // comptes[`${couloir}:${polarité}`][`YYYY-MM`] = nombre de documents.
@@ -111,13 +134,25 @@ export function versBandesChronologie(points: readonly PointChronologie[]): Seri
     parMois.set(moisDuPoint, (parMois.get(moisDuPoint) ?? 0) + 1)
     comptes.set(serie, parMois)
   }
+  // Total de chaque mois, toutes bandes confondues — le dénominateur des parts.
+  const totalParMois = new Map<string, number>()
+  for (const parMois of comptes.values())
+    for (const [m, n] of parMois) totalParMois.set(m, (totalParMois.get(m) ?? 0) + n)
   const triees: SerieBandeChronologie[] = []
   for (const couloir of ORDRE_COULOIRS) {
     for (const polarity of ORDRE_POLARITES) {
       const serie = idSerie(couloir, polarity)
       const parMois = comptes.get(serie)
       if (parMois === undefined) continue // couple sans document : pas de bande.
-      triees.push({ id: serie, data: mois.map((m) => ({ x: m, y: parMois.get(m) ?? 0 })) })
+      triees.push({
+        id: serie,
+        data: mois.map((m) => {
+          const compte = parMois.get(m) ?? 0
+          const total = totalParMois.get(m) ?? 0
+          const part = total === 0 ? 0 : compte / total
+          return { x: m, y: mode === 'parts' ? part : compte, compte, part }
+        }),
+      })
     }
   }
   return triees

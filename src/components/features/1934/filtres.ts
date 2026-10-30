@@ -1,5 +1,6 @@
 import type { Couloir, Document1934 } from '@/domain/1934'
 import { PERIODE_1934, couloirDe, estDansLaPeriode } from '@/domain/1934'
+import { MODES_FRISE, type ModeFrise } from './chronologie'
 
 /**
  * Adaptateur de filtres de la page sujet (spec §4, tableau « Filtres ») : l'état de
@@ -33,6 +34,8 @@ export interface FiltresSujet {
   readonly au: string
   /** Document ciblé (`?doc=`) pour l'ancrage/surlignage — le détail complet arrive en 9.5. */
   readonly doc: string | null
+  /** Échelle de la frise (`?frise=parts`) : comptes bruts (défaut) ou parts relatives du mois. */
+  readonly frise: ModeFrise
 }
 
 /** Listes distinctes du corpus, pour valider `orateur`/`journal` (un nom inconnu est ignoré). */
@@ -43,11 +46,19 @@ export interface ListesDeFiltres {
 
 /** Les valeurs par défaut du tableau de spec §4 : tout, trimestre complet, rien de ciblé. */
 export function filtresParDefaut(): FiltresSujet {
-  return { type: 'tout', orateurs: [], journaux: [], du: PERIODE_1934.du, au: PERIODE_1934.au, doc: null }
+  return {
+    type: 'tout',
+    orateurs: [],
+    journaux: [],
+    du: PERIODE_1934.du,
+    au: PERIODE_1934.au,
+    doc: null,
+    frise: 'effectifs',
+  }
 }
 
 /** Paramètres dont ce module est seul maître (les autres, s'il y en a, sont préservés). */
-const CLES_FILTRES = ['type', 'orateur', 'journal', 'du', 'au', 'doc'] as const
+const CLES_FILTRES = ['type', 'orateur', 'journal', 'du', 'au', 'doc', 'frise'] as const
 
 const DATE_ISO = /^\d{4}-\d{2}-\d{2}$/
 const ID_DOCUMENT = /^(?:pd|cp)-\d{3}$/
@@ -76,7 +87,8 @@ function lireMulti(
  * - `orateur`/`journal` inconnus (absents des listes du corpus) ⇒ ignorés, dédoublons ;
  * - `du`/`au` mal formés ou hors du trimestre ⇒ valeur par défaut ; `du > au` (fenêtre
  *   trafiquée) ⇒ les deux retombent aux bornes du trimestre ;
- * - `doc` ne ressemblant pas à un id de document ⇒ ignoré.
+ * - `doc` ne ressemblant pas à un id de document ⇒ ignoré ;
+ * - `frise` inconnu ⇒ `effectifs`.
  * Sans `listes`, les noms multi ne sont pas confrontés au corpus (tolérance côté hook en erreur).
  */
 export function lireFiltresDepuisURL(params: URLSearchParams, listes?: ListesDeFiltres): FiltresSujet {
@@ -84,6 +96,10 @@ export function lireFiltresDepuisURL(params: URLSearchParams, listes?: ListesDeF
   const type = (TYPES_FILTRE as readonly string[]).includes(typeBrut ?? '')
     ? (typeBrut as TypeFiltre)
     : 'tout'
+  const friseBrute = params.get('frise')
+  const frise: ModeFrise = (MODES_FRISE as readonly string[]).includes(friseBrute ?? '')
+    ? (friseBrute as ModeFrise)
+    : 'effectifs'
   let du = estDateDeLaPeriode(params.get('du')) ? params.get('du')! : PERIODE_1934.du
   let au = estDateDeLaPeriode(params.get('au')) ? params.get('au')! : PERIODE_1934.au
   if (du > au) {
@@ -98,6 +114,7 @@ export function lireFiltresDepuisURL(params: URLSearchParams, listes?: ListesDeF
     du,
     au,
     doc: doc !== null && ID_DOCUMENT.test(doc) ? doc : null,
+    frise,
   }
 }
 
@@ -115,6 +132,7 @@ export function appliquerFiltres(actuels: URLSearchParams, filtres: FiltresSujet
   if (filtres.du !== PERIODE_1934.du) suivants.set('du', filtres.du)
   if (filtres.au !== PERIODE_1934.au) suivants.set('au', filtres.au)
   if (filtres.doc !== null) suivants.set('doc', filtres.doc)
+  if (filtres.frise !== 'effectifs') suivants.set('frise', filtres.frise)
   return suivants
 }
 
