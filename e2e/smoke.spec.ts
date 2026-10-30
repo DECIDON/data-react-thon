@@ -79,4 +79,17 @@ test.describe('fumée', () => {
       page.getByRole('link', { name: 'Le Républicain picard — édition du 13 janvier 1934' }),
     ).toHaveAttribute('href', 'https://archives.example/republicain-picard/1934-01-13')
   })
+
+  test('titre cliquable : le sélecteur de sujet mène à un autre sujet', async ({ page }) => {
+    await page.goto('/sujet/desarmement')
+    await page.getByRole('button', { name: 'La crise du désarmement' }).click()
+    const dialogue = page.getByRole('dialog', { name: 'Changer de sujet' })
+    await expect(dialogue).toBeVisible()
+    // La liste déroulante contient bien les six sujets du registre.
+    await expect(dialogue.getByRole('option')).toHaveCount(6)
+    await dialogue.getByRole('combobox').selectOption('ligues')
+    await expect(dialogue).toBeHidden()
+    await expect(page).toHaveURL(/\/sujet\/ligues$/)
+    await expect(page.getByRole('heading', { level: 1, name: 'La menace des ligues' })).toBeVisible()
+  })
 })

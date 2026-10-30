@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { MemoryRouter, Route, Routes, useSearchParams } from 'react-router'
+import { MemoryRouter, Route, Routes, useLocation, useSearchParams } from 'react-router'
 import { describe, expect, it, vi } from 'vitest'
 import { SujetPage } from './SujetPage'
 
@@ -57,10 +57,28 @@ function Sonde() {
   return <p>{`URL: ${params.toString() || '(vide)'}`}</p>
 }
 
+/** Témoin de la route courante : le sélecteur de sujet navigue, la sonde de chemin le prouve. */
+function SondeChemin() {
+  return <p>{`CHEMIN: ${useLocation().pathname}`}</p>
+}
+
 function renduSujet(entry: string) {
   return render(
     <MemoryRouter initialEntries={[entry]}>
       <Sonde />
+      <Routes>
+        <Route path="/sujet/:id" element={<SujetPage />} />
+      </Routes>
+    </MemoryRouter>,
+  )
+}
+
+/** Même rendu, avec le témoin de chemin : pour prouver que le sélecteur a bien navigué. */
+function renduAvecChemin(entry: string) {
+  return render(
+    <MemoryRouter initialEntries={[entry]}>
+      <Sonde />
+      <SondeChemin />
       <Routes>
         <Route path="/sujet/:id" element={<SujetPage />} />
       </Routes>
@@ -243,5 +261,44 @@ describe('SujetPage — détail d’un document en modale (9.5)', () => {
     renduSujet('/sujet/desarmement?doc=patraque')
     expect(screen.getByRole('status')).toHaveTextContent('patraque')
     expect(urlCourante().textContent).not.toContain('doc=')
+  })
+})
+
+describe('SujetPage — sélecteur de sujet depuis le titre', () => {
+  it('le titre cliquable ouvre le sélecteur : choisir un sujet affiche sa page', async () => {
+    const user = userEvent.setup()
+    renduAvecChemin('/sujet/desarmement')
+    await user.click(screen.getByRole('button', { name: 'La crise du désarmement' }))
+    const dialogue = screen.getByRole('dialog', { name: 'Changer de sujet' })
+    // La liste déroulante propose TOUS les sujets du registre, celui de l'écran en tête.
+    const liste = within(dialogue).getByRole('combobox', { name: 'Tous les sujets du registre' })
+    expect(liste).toHaveValue('desarmement')
+    expect(within(dialogue).getAllByRole('option')).toHaveLength(6)
+    await user.selectOptions(liste, 'ligues')
+    // C'est désormais le sujet sélectionné qui est affiché, pop-up refermée, filtres repris à zéro.
+    expect(screen.queryByRole('dialog')).toBeNull()
+    expect(screen.getByRole('heading', { level: 1, name: 'La menace des ligues' })).toBeVisible()
+    expect(screen.getByText('CHEMIN: /sujet/ligues')).toBeInTheDocument()
+    expect(urlCourante().textContent).toBe('URL: (vide)')
+  })
+
+  it('Échap sur le sélecteur : la pop-up se referme sans changer de sujet', async () => {
+    const user = userEvent.setup()
+    renduAvecChemin('/sujet/desarmement')
+    await user.click(screen.getByRole('button', { name: 'La crise du désarmement' }))
+    expect(screen.getByRole('dialog', { name: 'Changer de sujet' })).toHaveAttribute('open')
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('dialog')).toBeNull()
+    expect(screen.getByRole('heading', { level: 1, name: 'La crise du désarmement' })).toBeVisible()
+    expect(document.activeElement).toBe(screen.getByRole('button', { name: 'La crise du désarmement' }))
+  })
+
+  it('bouton « Fermer » du sélecteur : fermeture sans navigation', async () => {
+    const user = userEvent.setup()
+    renduAvecChemin('/sujet/desarmement')
+    await user.click(screen.getByRole('button', { name: 'La crise du désarmement' }))
+    await user.click(screen.getByRole('button', { name: 'Fermer' }))
+    expect(screen.queryByRole('dialog')).toBeNull()
+    expect(screen.getByText('CHEMIN: /sujet/desarmement')).toBeInTheDocument()
   })
 })

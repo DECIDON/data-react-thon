@@ -5,6 +5,7 @@ import { CarteDocument } from '@/components/features/1934/CarteDocument'
 import { Chronologie } from '@/components/features/1934/Chronologie'
 import { DocumentDetail } from '@/components/features/1934/DocumentDetail'
 import { Miroir } from '@/components/features/1934/Miroir'
+import { SelecteurSujet } from '@/components/features/1934/SelecteurSujet'
 import {
   appliquerFiltres,
   filtrer,
@@ -69,6 +70,10 @@ export function SujetPage() {
   // perdu le param (source de vérité) ; ni persistée, ni partageable, ni doublon d'état
   // (cf. `state.md`, ligne « Détail d'un document »).
   const [docIntrouvable, setDocIntrouvable] = useState<string | null>(null)
+  // Ouverture du sélecteur de sujet (modale du titre) : état local éphémère, assumé —
+  // une pop-up ouverte ne se partage pas et ne survit volontairement au rechargement
+  // (cf. `docIntrouvable` ci-dessus : même statut d'état purement d'affichage).
+  const [selecteurOuvert, setSelecteurOuvert] = useState(false)
 
   // Le document ciblé (`?doc=`) s'ancre au centre et se surligne ; jamais de crash si
   // l'id vise un document hors liste (filtré, ou d'un autre sujet). La carte reste ancrée
@@ -149,7 +154,20 @@ export function SujetPage() {
         <Link to="/" className="text-sm text-neutral-600 underline">
           ← Retour à l’accueil
         </Link>
-        <h1 className="text-4xl font-bold tracking-tight">{sujet.label}</h1>
+        {/* Le titre est le point d'entrée du sélecteur de sujet : clic = pop-up listant tous
+            les sujets ; la flèche est purement décorative (aria-hidden) pour que le nom
+            accessible du titre reste exactement le libellé du sujet. */}
+        <h1 className="text-4xl font-bold tracking-tight">
+          <button
+            type="button"
+            id="bouton-titre-sujet"
+            aria-haspopup="dialog"
+            onClick={() => setSelecteurOuvert(true)}
+            className="cursor-pointer rounded-sm text-left underline decoration-dotted underline-offset-4 hover:text-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2"
+          >
+            {sujet.label} <span aria-hidden>▾</span>
+          </button>
+        </h1>
         <p className="text-sm text-neutral-500">
           {compteurs.coupes} coupes de presse · {compteurs.prises} prises de parole au registre du trimestre
           {filtresActifs ? ' (après filtres)' : ''}
@@ -244,6 +262,16 @@ export function SujetPage() {
           </ul>
         )}
       </section>
+
+      {/* Sélecteur de sujet : la modale n'existe que parce que l'utilisateur a cliqué le
+          titre ; sa fermeture (bouton, Échap, fond, navigation) repasse par l'état local. */}
+      {selecteurOuvert && (
+        <SelecteurSujet
+          sujets={corpus.sujets}
+          sujetActif={sujet.id}
+          onClose={() => setSelecteurOuvert(false)}
+        />
+      )}
 
       {/* Détail (9.5, spec §4.3) : la modale n'existe que parce que l'URL porte `?doc=` ;
           sa fermeture passe par `majFiltres`, donc par l'URL — jamais par un état doublon. */}
