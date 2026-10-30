@@ -7,7 +7,22 @@ import { formatDateLongue } from './presentation'
  * carte par document. Depuis 9.4, la carte elle-même est factorisée dans `CarteDocument`
  * (réutilisée par la page sujet) ; ce composant ne garde que l'habillage du panneau.
  * Composant aveugle à l'URL : la page lui fournit le jour (validé) et les documents.
+ *
+ * Chaque carte est un lien vers le sujet du document (post-R9) : `suivrevers` construit
+ * l'URL du premier sujet portant le document (ordre du corpus = ordre d'autorité éditorial),
+ * muni du lien profond `?doc=` — arriver sur la page sujet, c'est aussi retrouver le détail
+ * du document cliqué.
  */
+
+/**
+ * Carte du jour → URL du premier sujet portant le document, avec ancre de détail.
+ * `undefined` si le document ne porte aucun sujet (que le contrat Zod proscrit : la carte
+ * reste alors simple, sans lien) — monnaie `undefined`, pas d'exception.
+ */
+export function suivrevers(doc: Document1934): string | undefined {
+  const sujet = doc.subjects.at(0)
+  return sujet === undefined ? undefined : `/sujet/${sujet.topicId}?doc=${doc.id}`
+}
 
 interface DocumentsDuJourProps {
   readonly jour: string
@@ -28,7 +43,7 @@ export function DocumentsDuJour({ jour, documents, sujets }: DocumentsDuJourProp
         <ul className="flex flex-col gap-3">
           {documents.map((doc) => (
             <li key={doc.id}>
-              <CarteDocument doc={doc} sujets={sujets} />
+              <CarteDocument doc={doc} sujets={sujets} lien={suivrevers(doc)} />
             </li>
           ))}
         </ul>

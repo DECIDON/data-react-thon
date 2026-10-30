@@ -1,6 +1,7 @@
 import type { Document1934, Polarite, Sujet } from '@/domain/1934'
 import { estPriseDeParole } from '@/domain/1934'
 import type { ReactNode } from 'react'
+import { Link } from 'react-router'
 import { formatDateLongue, libelleChambre, tronquer } from './presentation'
 
 /**
@@ -40,6 +41,13 @@ interface CarteDocumentProps {
   readonly ancre?: string
   /** Pied de carte optionnel (ex. bouton « voir le détail » de la liste filtrée). */
   readonly children?: ReactNode
+  /**
+   * URL cible (ex. `/sujet/desarmement?doc=cp-003`) : quand elle est posée, la carte entière
+   * devient un lien — clic = ouverture du sujet dans `SujetPage`, le `?doc=` du lien profond
+   * rouvrant le détail du document cliqué. La page sujet ne la pose pas : ses cartes portent
+   * déjà leur bouton « voir le détail », et deux zones cliquables imbriquées sont un piège.
+   */
+  readonly lien?: string
 }
 
 /**
@@ -68,17 +76,10 @@ export function PucesPolarite({
   )
 }
 
-export function CarteDocument({ doc, sujets, cible = false, ancre, children }: CarteDocumentProps) {
+export function CarteDocument({ doc, sujets, cible = false, ancre, children, lien }: CarteDocumentProps) {
   const couloir = estPriseDeParole(doc) ? 'parlement' : 'presse'
-  return (
-    <article
-      id={ancre}
-      tabIndex={ancre !== undefined ? -1 : undefined}
-      aria-current={cible ? 'true' : undefined}
-      className={`rounded-lg border bg-white p-4 ${
-        cible ? 'border-amber-500 ring-2 ring-amber-300' : 'border-neutral-200'
-      }`}
-    >
+  const corps = (
+    <>
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <span className="rounded-full bg-neutral-900 px-2.5 py-0.5 text-xs font-medium text-neutral-50">
           {LIBELLE_TYPE[couloir]}
@@ -94,6 +95,37 @@ export function CarteDocument({ doc, sujets, cible = false, ancre, children }: C
         </p>
       )}
       <PucesPolarite doc={doc} sujets={sujets} />
+    </>
+  )
+  const classesCarte = `rounded-lg border bg-white p-4 ${
+    cible ? 'border-amber-500 ring-2 ring-amber-300' : 'border-neutral-200'
+  }`
+  // Carte-lien (post-R9) : la carte entière mène au sujet du document, le `?doc=` du lien
+  // profond rouvrant son détail. Le pied de carte (`children`, ex. bouton « voir le détail »)
+  // reste HORS du lien : un actif ne s'imbreque pas dans un actif ; la page sujet ne pose donc
+  // jamais `lien`, ses cartes gardent leur bouton.
+  if (lien !== undefined) {
+    return (
+      <div className="flex flex-col gap-2">
+        <Link
+          to={lien}
+          aria-label={`Ouvrir le sujet depuis cette ${LIBELLE_TYPE[couloir].toLowerCase()} — ${doc.source.title}`}
+          className="block rounded-lg no-underline outline-offset-2 focus-visible:ring-2 focus-visible:ring-amber-400"
+        >
+          <article className={`${classesCarte} transition-colors hover:border-amber-400`}>{corps}</article>
+        </Link>
+        {children}
+      </div>
+    )
+  }
+  return (
+    <article
+      id={ancre}
+      tabIndex={ancre !== undefined ? -1 : undefined}
+      aria-current={cible ? 'true' : undefined}
+      className={classesCarte}
+    >
+      {corps}
       {children}
     </article>
   )
