@@ -37,8 +37,17 @@ function versLignes(series: readonly SerieParMois[]): LigneBar[] {
 
 /** Libellé de mois en français : « janvier 1934 » (l'agrégat ne porte que « 1934-01 »). */
 const FORMATEUR_MOIS = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' })
+/** 'AAAA-MM' strict : seule forme qu'on a le droit de passer au formateur de date. */
+const MOIS_ISO = /^\d{4}-\d{2}$/
 export function libelleMois(mois: string): string {
-  return FORMATEUR_MOIS.format(new Date(`${mois}-01T00:00:00Z`))
+  // Garde défensive (bug R9 post-livraison : double formatage en infobulle → RangeError sous
+  // ErrorBoundary) : toute valeur qui ne se lit pas comme un mois valide est un libellé déjà
+  // fait (ou un bruit), on la rend telle quelle.
+  if (!MOIS_ISO.test(mois)) {
+    return mois
+  }
+  const date = new Date(`${mois}-01T00:00:00Z`)
+  return Number.isFinite(date.getTime()) ? FORMATEUR_MOIS.format(date) : mois
 }
 
 /** Infobulle : mois en titre, compte par polarité (spec §5, infobulle date + contenu). */
@@ -89,7 +98,8 @@ export function BarMois({ series }: BarMoisProps) {
           borderRadius={3}
           enableLabel={false}
           axisBottom={{ format: (valeur: string | number) => libelleMois(String(valeur)) }}
-          tooltipLabel={(datum) => libelleMois(String(datum.indexValue))}
+          // Rends l'index BRUT ('AAAA-MM') : c'est l'Infobulle qui met en français — pas les deux.
+          tooltipLabel={(datum) => String(datum.indexValue)}
           colors={(datum: { id: string | number }) =>
             COULEUR_PAR_CLE[String(datum.id) as (typeof CLES)[number]]
           }
