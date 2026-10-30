@@ -60,7 +60,11 @@ export const Document1934Schema = z
   .object({
     id: z
       .string()
-      .regex(/^(?:pd|cp)-\d{3}$/, 'Id de document attendu sous la forme « pd-001 » / « cp-001 ».'),
+      .regex(/^(?:pd|cp)-\d{3,5}$/, 'Id de document attendu sous la forme « pd-001 » / « cp-00001 ».'),
+    /** Référence d'archive d'origine (docid de l'export presse), conservée pour la traçabilité. */
+    docid: z.string().min(1).optional(),
+    /** Identifiant d'origine dans l'export débats (`export_debats_topics.json`), même traçabilité. */
+    sourceId: z.string().min(1).optional(),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date attendue au format ISO « YYYY-MM-DD ».'),
     source: z
       .object({

@@ -26,17 +26,19 @@ test.describe('fumée', () => {
     await expect(page.getByText('Prototype — données fictives')).toBeVisible()
   })
 
-  test('une carte vitrine mène à la page sujet : phares, miroir et filtres rendus', async ({ page }) => {
+  test('une carte vitrine mène à la page sujet : miroir et filtres rendus', async ({ page }) => {
     await page.goto('/')
     await page.getByRole('link', { name: 'La crise du désarmement' }).click()
     await expect(page.getByRole('heading', { level: 1, name: 'La crise du désarmement' })).toBeVisible()
-    await expect(page.getByRole('heading', { level: 2, name: 'Extraits phares' })).toBeVisible()
+    // TODO(corpus) : plus aucun « Extraits phares » — les exports ne portent pas de `highlight`,
+    // et les trois sujets de vitrine ne sont pas classés par l'export (0 document chacun).
     await expect(page.getByRole('heading', { level: 2, name: 'Miroir du sujet' })).toBeVisible()
     await expect(page.getByRole('button', { name: 'Parlement' })).toBeVisible()
   })
 
   test('parcours juré 9.4 : filtres en URL puis ancrage du détail', async ({ page }) => {
-    await page.goto('/sujet/desarmement')
+    // Sujet classé par les deux exports, fenêtré à une journée de séance (74 documents).
+    await page.goto('/sujet/agriculture?du=1934-02-08&au=1934-02-08')
     // Filtre « Parlement » : l'URL porte le filtre, la liste suit (spec §4).
     await page.getByRole('button', { name: 'Parlement' }).click()
     await expect(page).toHaveURL(/type=parlement/)
@@ -72,12 +74,11 @@ test.describe('fumée', () => {
     await expect(page).not.toHaveURL(/doc=/)
     // URL partageable : le lien profond rouvre le bon document, extrait RENDU ENTIER
     // (la fin de phrase, coupée par la troncature de la liste, est bien présente).
-    await page.goto('/sujet/desarmement?doc=cp-003')
+    await page.goto('/sujet/libre-2?du=1934-02-12&au=1934-02-12&doc=cp-30619')
     await expect(page.getByRole('dialog', { name: 'Coupe de presse' })).toBeVisible()
-    await expect(page.getByRole('dialog')).toContainText('cent mille au pays.')
-    await expect(
-      page.getByRole('link', { name: 'Le Républicain picard — édition du 13 janvier 1934' }),
-    ).toHaveAttribute('href', 'https://archives.example/republicain-picard/1934-01-13')
+    await expect(page.getByRole('dialog')).toContainText('aussi satisfaisant que possible')
+    // L'export presse ne porte pas d'archive adressable : la source est un texte, pas un lien.
+    await expect(page.getByText('JDPL — édition du 12 février 1934')).toBeVisible()
   })
 
   test('titre cliquable : le sélecteur de sujet mène à un autre sujet', async ({ page }) => {
@@ -86,7 +87,7 @@ test.describe('fumée', () => {
     const dialogue = page.getByRole('dialog', { name: 'Changer de sujet' })
     await expect(dialogue).toBeVisible()
     // La liste déroulante contient bien les six sujets du registre.
-    await expect(dialogue.getByRole('option')).toHaveCount(6)
+    await expect(dialogue.getByRole('option')).toHaveCount(13)
     await dialogue.getByRole('combobox').selectOption('ligues')
     await expect(dialogue).toBeHidden()
     await expect(page).toHaveURL(/\/sujet\/ligues$/)

@@ -18,12 +18,14 @@ import {
  */
 
 describe('chargerCorpus — corpus réel commissionné', () => {
-  it('charge un corpus valide : 6 sujets, 100 documents', () => {
+  it('charge un corpus valide : 13 sujets, 66 350 documents', () => {
     const resultat = chargerCorpus()
     expect(resultat.ok).toBe(true)
     if (!resultat.ok) return
-    expect(resultat.value.sujets).toHaveLength(6)
-    expect(resultat.value.documents).toHaveLength(100)
+    // 6 sujets rédactionnels + 7 issus de la classification de l'export presse.
+    expect(resultat.value.sujets).toHaveLength(13)
+    // 7 038 prises de parole de l'export débats + 59 312 coupes de l'export presse.
+    expect(resultat.value.documents).toHaveLength(66_350)
   })
 
   it('mémoïse au premier appel : même référence au second', () => {
@@ -92,15 +94,17 @@ describe('sélecteurs dérivés', () => {
   })
 
   it('documentParId retrouve un document n’importe où dans le corpus, rien pour un inconnu', () => {
-    expect(documentParId(corpus, 'cp-003')?.source.url).toBe(
-      'https://archives.example/republicain-picard/1934-01-13',
-    )
+    // Coupe servie par l'export presse : `source.url` y est null (pas d'archive adressable).
+    const coupe = documentParId(corpus, 'cp-00010')
+    expect(coupe?.source.title).toBe('La Dépêche de Toulouse — édition du 9 janvier 1934')
+    expect(coupe?.docid).toBe('depechetoulouse-1934-01-09-a-i0006')
     expect(documentParId(corpus, 'cp-999')).toBeUndefined()
     expect(documentParId(corpus, 'patraque')).toBeUndefined()
   })
 
   it('documentsParSujet ne renvoie que les documents rattachés, triés par date', () => {
-    const id: SujetId = 'ligues'
+    // Sujet classé : les 6 sujets rédactionnels n'ont encore aucun document des exports.
+    const id: SujetId = 'agriculture'
     const docs = documentsParSujet(corpus, id)
     expect(docs.length).toBeGreaterThan(0)
     for (const doc of docs) {
@@ -118,8 +122,9 @@ describe('sélecteurs dérivés', () => {
     const noms = journaux(corpus)
     expect(noms).toEqual([...noms].sort((a, b) => a.localeCompare(b, 'fr')))
     expect(new Set(noms).size).toBe(noms.length)
-    expect(noms.length).toBeGreaterThanOrEqual(5)
-    expect(noms.length).toBeLessThanOrEqual(6)
+    // Les 18 titres composantes de l'export presse.
+    expect(noms).toHaveLength(18)
+    expect(noms).toContain('Paris-Midi')
     for (const nom of noms) expect(nom).not.toContain('—')
   })
 
@@ -127,9 +132,11 @@ describe('sélecteurs dérivés', () => {
     const noms = locuteurs(corpus)
     expect(noms).toEqual([...noms].sort((a, b) => a.localeCompare(b, 'fr')))
     expect(new Set(noms).size).toBe(noms.length)
-    expect(noms).toHaveLength(8)
-    // Un nom de locuteur ne doit jamais sortir du lot des journaux.
-    for (const nom of noms) expect(journaux(corpus)).not.toContain(nom)
+    // L'export débats nomme ses orateurs : 7 038 prises pour 1 109 locuteurs distincts.
+    expect(noms).toHaveLength(1_109)
+    // Un nom de locuteur ne doit jamais sortir du lot des journaux (lot calculé une fois).
+    const journauxDuCorpus = journaux(corpus)
+    for (const nom of noms) expect(journauxDuCorpus).not.toContain(nom)
   })
 
   it('journaux : repli sur le titre entier si le nom devant le tiret manque', () => {
@@ -156,10 +163,11 @@ describe('sélecteurs dérivés', () => {
   })
 
   it('documentsParSujet renvoie une copie modifiable (le corpus gelé ne se mutile pas)', () => {
-    const docs: Document1934[] = documentsParSujet(corpus, 'budget')
+    // Sujet fourni par les deux exports, et assez léger pour garder le test profond lisible.
+    const docs: Document1934[] = documentsParSujet(corpus, 'libre-2')
     const reference = [...docs]
     docs.reverse()
     expect(docs).not.toEqual(reference)
-    expect(documentsParSujet(corpus, 'budget')).toEqual(reference)
+    expect(documentsParSujet(corpus, 'libre-2')).toEqual(reference)
   })
 })

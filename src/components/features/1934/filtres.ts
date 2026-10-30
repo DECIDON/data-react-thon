@@ -61,7 +61,7 @@ export function filtresParDefaut(): FiltresSujet {
 const CLES_FILTRES = ['type', 'orateur', 'journal', 'du', 'au', 'doc', 'frise'] as const
 
 const DATE_ISO = /^\d{4}-\d{2}-\d{2}$/
-const ID_DOCUMENT = /^(?:pd|cp)-\d{3}$/
+const ID_DOCUMENT = /^(?:pd|cp)-\d{3,5}$/
 
 /** Comparateur stable (fr) pour que l'URL écrite soit déterministe, quel que soit l'ordre reçu. */
 const comparerFr = (a: string, b: string) => a.localeCompare(b, 'fr')

@@ -19,8 +19,8 @@ describe('useCorpus1934', () => {
     const { result } = renderHook(() => useCorpus1934())
     expect(result.current.ok).toBe(true)
     if (!result.current.ok) return
-    expect(result.current.corpus.sujets).toHaveLength(6)
-    expect(result.current.corpus.documents).toHaveLength(100)
+    expect(result.current.corpus.sujets).toHaveLength(13)
+    expect(result.current.corpus.documents).toHaveLength(66_350)
   })
 
   it('renvoie la même référence entre deux re-rendus (mémoïsation du port, pas de cache maison)', () => {
@@ -47,7 +47,8 @@ describe('hooks dérivés', () => {
   })
 
   it('useDocumentsDuSujet sert les documents du sujet, triés par date', () => {
-    const { result } = renderHook(() => useDocumentsDuSujet('foire-aux-valeurs'))
+    // Sujet classé par les exports : les 6 sujets rédactionnels n'ont encore aucun document.
+    const { result } = renderHook(() => useDocumentsDuSujet('agriculture'))
     expect(result.current.ok).toBe(true)
     if (!result.current.ok) return
     const dates = result.current.documents.map((doc) => doc.date)
@@ -60,17 +61,18 @@ describe('hooks dérivés', () => {
     expect(result.current.ok).toBe(true)
     if (!result.current.ok) return
     expect(result.current.journaux.length).toBeGreaterThanOrEqual(5)
-    expect(result.current.locuteurs).toHaveLength(8)
+    // 1 109 noms distincts pour 7 038 prises de parole de l'export débats.
+    expect(result.current.locuteurs).toHaveLength(1_109)
     expect(result.current.journaux).toEqual(
       [...result.current.journaux].sort((a, b) => a.localeCompare(b, 'fr')),
     )
   })
 
   it('useDocument1934 retrouve le document ciblé par ?doc=, sans restriction de sujet', () => {
-    const { result } = renderHook(() => useDocument1934('cp-003'))
+    const { result } = renderHook(() => useDocument1934('cp-00010'))
     expect(result.current.ok).toBe(true)
     if (!result.current.ok) return
-    expect(result.current.document?.id).toBe('cp-003')
+    expect(result.current.document?.id).toBe('cp-00010')
   })
 
   it('useDocument1934 id inconnu ou absent : ok sans document (le message « introuvable » se décide à l’écran)', () => {

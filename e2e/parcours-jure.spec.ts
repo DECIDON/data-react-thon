@@ -40,10 +40,12 @@ test.describe('parcours juré (R9.6)', () => {
     await expect(miroir.getByRole('heading', { level: 3, name: 'Au parlement' })).toBeVisible()
     await expect(miroir.getByText('La crise du désarmement · positif')).toBeVisible()
     await expect(miroir.getByText('La crise du désarmement · négatif')).toBeVisible()
-    // Raccord 9.6 : le miroir aussi mène au détail — la presse d'abord, fermeture au clavier.
+    // Raccord 9.6 : le miroir aussi mène au détail — on ouvre la première carte proposée,
+    // en fermant au clavier. (Sujet « désarmement » : la presse n'y est pas encore rattachée
+    // par la classification de l'export, c'est donc le volet parlement qui mène.)
     await miroir.getByRole('button', { name: 'voir le détail' }).first().click()
-    await expect(page.getByRole('dialog', { name: 'Coupe de presse' })).toBeVisible()
-    await expect(page).toHaveURL(/doc=cp-003/)
+    await expect(page.getByRole('dialog', { name: 'Prise de parole' })).toBeVisible()
+    await expect(page).toHaveURL(/doc=pd-\d{3}/)
     await page.keyboard.press('Escape')
     await expect(page.getByRole('dialog')).toBeHidden()
     await expect(page).not.toHaveURL(/doc=/)

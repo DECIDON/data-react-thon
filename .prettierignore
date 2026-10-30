@@ -4,3 +4,8 @@ coverage
 playwright-report
 test-results
 public/version.json
+
+# Données de corpus générées depuis l'export (compactes, non mises en forme)
+src/data/1934/press.json
+src/data/1934/statements.json
+src/data/1934/*.csv

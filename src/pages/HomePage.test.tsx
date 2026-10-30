@@ -70,32 +70,33 @@ describe('HomePage — accueil 1934', () => {
   it('clic sur un jour : l’URL porte ?jour= et le panneau du jour s’ouvre', async () => {
     const user = userEvent.setup()
     rendu()
-    await user.click(screen.getByRole('button', { name: /^1934-01-03/ }))
-    expect(window.location.search).toContain('jour=1934-01-03')
-    expect(screen.getByRole('heading', { level: 2, name: 'Documents du 3 janvier 1934' })).toBeVisible()
+    // Le corpus des exports commence le 9 janvier 1934 : c'est le premier jour cliquable.
+    await user.click(screen.getByRole('button', { name: /^1934-01-09/ }))
+    expect(window.location.search).toContain('jour=1934-01-09')
+    expect(screen.getByRole('heading', { level: 2, name: 'Documents du 9 janvier 1934' })).toBeVisible()
     expect(screen.getByText('Prise de parole')).toBeVisible()
-    expect(screen.getAllByText('La crise du désarmement · positif').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('Courrier libre 2 · neutre').length).toBeGreaterThan(0)
   })
 
   it('re-clic sur le jour retenu : le panneau se referme et ?jour= disparaît', async () => {
     const user = userEvent.setup()
     rendu()
-    await user.click(screen.getByRole('button', { name: /^1934-01-03/ }))
-    await user.click(screen.getByRole('button', { name: /^1934-01-03/ }))
+    await user.click(screen.getByRole('button', { name: /^1934-01-09/ }))
+    await user.click(screen.getByRole('button', { name: /^1934-01-09/ }))
     expect(window.location.search).not.toContain('jour=')
-    expect(screen.queryByRole('heading', { name: 'Documents du 3 janvier 1934' })).toBeNull()
+    expect(screen.queryByRole('heading', { name: 'Documents du 9 janvier 1934' })).toBeNull()
   })
 
   it('lien profond : ?jour= déjà présent à l’arrivée rend le panneau (survit au rechargement)', () => {
     render(
-      <MemoryRouter initialEntries={['/?jour=1934-01-03']}>
+      <MemoryRouter initialEntries={['/?jour=1934-01-09']}>
         <HomePage />
       </MemoryRouter>,
     )
-    expect(screen.getByRole('heading', { level: 2, name: 'Documents du 3 janvier 1934' })).toBeVisible()
-    // Une seule source ce jour-là (pd-001) : le bandeau date + source la nomme en entier.
+    expect(screen.getByRole('heading', { level: 2, name: 'Documents du 9 janvier 1934' })).toBeVisible()
+    // Une seule prise de parole ce jour-là (pd-00001) : le bandeau date + source la nomme en entier.
     expect(
-      screen.getByText('3 janvier 1934 · Compte rendu de la séance de la Chambre du 3 janvier 1934'),
+      screen.getByText('9 janvier 1934 · Compte rendu de la séance de la Chambre du 9 janvier 1934'),
     ).toBeVisible()
   })
 })
