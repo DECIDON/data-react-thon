@@ -74,6 +74,16 @@ export function sujetParId(corpus: Corpus1934, id: string): Sujet | undefined {
   return corpus.sujets.find((sujet) => sujet.id === id)
 }
 
+/**
+ * Document d'identifiant donné, `undefined` si inconnu — résolution sur le corpus **entier**,
+ * pas restreinte au sujet courant (un lien profond `?doc=` doit ouvrir le détail quel que
+ * soit l'écran où il atterrit, spec §4.3). Comme pour `sujetParId`, le « introuvable » est
+ * une décision d'UI (message discret + nettoyage d'URL), pas une erreur de donnée.
+ */
+export function documentParId(corpus: Corpus1934, id: string): Document1934 | undefined {
+  return corpus.documents.find((doc) => doc.id === id)
+}
+
 /** Documents rattachés au sujet (file de jointure, CONTEXT.md), dans l'ordre chronologique. */
 export function documentsParSujet(corpus: Corpus1934, id: SujetId | string): Document1934[] {
   return corpus.documents

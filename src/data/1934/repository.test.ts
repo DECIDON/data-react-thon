@@ -4,6 +4,7 @@ import { DataError } from '@/platform/errors/base'
 import { describe, expect, it } from 'vitest'
 import {
   chargerCorpus,
+  documentParId,
   documentsParSujet,
   journaux,
   locuteurs,
@@ -88,6 +89,14 @@ describe('sélecteurs dérivés', () => {
   it('sujetParId retrouve un sujet connu et rien pour un inconnu', () => {
     expect(sujetParId(corpus, 'desarmement')?.label).toBe('La crise du désarmement')
     expect(sujetParId(corpus, 'nimporte-quoi')).toBeUndefined()
+  })
+
+  it('documentParId retrouve un document n’importe où dans le corpus, rien pour un inconnu', () => {
+    expect(documentParId(corpus, 'cp-003')?.source.url).toBe(
+      'https://archives.example/republicain-picard/1934-01-13',
+    )
+    expect(documentParId(corpus, 'cp-999')).toBeUndefined()
+    expect(documentParId(corpus, 'patraque')).toBeUndefined()
   })
 
   it('documentsParSujet ne renvoie que les documents rattachés, triés par date', () => {

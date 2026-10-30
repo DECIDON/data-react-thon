@@ -3,10 +3,11 @@
 Règle invariante : tout état métier naît dans la base locale + hook d'abonnement ; Zustand est plafonné à
 2 foyers et réservé aux statuts d'exécution et notifications. Aucun état n'est créé sans ligne ici **avant** son code.
 
-| Foyer                                | Mécanisme                         | Propriétaire | Cycle de vie                        | Persistance        |
-| ------------------------------------ | --------------------------------- | ------------ | ----------------------------------- | ------------------ |
-| _(aucun en application aujourd'hui)_ | —                                 | —            | —                                   | —                  |
-| Filtres & sujet actif (R9)           | URL (`searchParams` react-router) | navigateur   | survit au rechargement, partageable | aucune persistance |
+| Foyer                                | Mécanisme                         | Propriétaire | Cycle de vie                                                            | Persistance        |
+| ------------------------------------ | --------------------------------- | ------------ | ----------------------------------------------------------------------- | ------------------ |
+| _(aucun en application aujourd'hui)_ | —                                 | —            | —                                                                       | —                  |
+| Filtres & sujet actif (R9)           | URL (`searchParams` react-router) | navigateur   | survit au rechargement, partageable                                     | aucune persistance |
+| Détail d'un document ouvert (R9.5)   | URL (`?doc=`) + `<dialog>` modal  | navigateur   | ouvert tant que le param est posé ; survit au rechargement, partageable | aucune persistance |
 
 > Ligne de R9 posée **avant** le code (règle du fichier : aucune ligne sans état ; ici la ligne
 > est l'engagement préalable) : les filtres et le sujet actif n'existaient pas encore. Le jour retenu

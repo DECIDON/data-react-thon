@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes, useSearchParams } from 'react-router'
 import { describe, expect, it, vi } from 'vitest'
@@ -175,5 +175,73 @@ describe('SujetPage — parcours 9.4', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Sujet introuvable' })).toBeVisible()
     expect(screen.getByText(/sujet-inexistant/)).toBeVisible()
     expect(screen.getByRole('link', { name: '← Retour à l’accueil' })).toHaveAttribute('href', '/')
+  })
+})
+
+describe('SujetPage — détail d’un document en modale (9.5)', () => {
+  it('lien profond ?doc= : la modale s’ouvre dès l’arrivée, extrait intégral et source liée', () => {
+    renduSujet('/sujet/desarmement?doc=cp-003')
+    const dialogue = screen.getByRole('dialog', { name: 'Coupe de presse' })
+    expect(dialogue).toHaveAttribute('open')
+    // Extrait intégral (la carte du fond, elle, est tronquée) + lien vers l'archive fictive.
+    expect(within(dialogue).getByText(/cent mille au pays\./)).toBeVisible()
+    expect(dialogue.textContent).not.toMatch(/…\s*$/)
+    expect(
+      within(dialogue).getByRole('link', { name: 'Le Républicain picard — édition du 13 janvier 1934' }),
+    ).toHaveAttribute('href', 'https://archives.example/republicain-picard/1934-01-13')
+    // La 9.4 reste : la carte visée est toujours ancrée derrière la modale.
+    expect(document.getElementById('document-cp-003')).not.toBeNull()
+  })
+
+  it('la modale porte les puces de TOUS les sujets du document, pas seulement celui de la page', () => {
+    renduSujet('/sujet/desarmement?doc=pd-008')
+    const dialogue = screen.getByRole('dialog', { name: 'Prise de parole' })
+    const puces = within(dialogue).getByRole('list', { name: 'Polarités par sujet' })
+    expect(puces).toHaveTextContent('La crise du désarmement · positif')
+    expect(puces).toHaveTextContent('Le budget et les décrets-lois · neutre')
+  })
+
+  it('bouton « Fermer » : la modale se ferme et ?doc= disparaît de l’URL', async () => {
+    const user = userEvent.setup()
+    renduSujet('/sujet/desarmement?doc=cp-003')
+    await user.click(screen.getByRole('button', { name: 'Fermer' }))
+    expect(screen.queryByRole('dialog')).toBeNull()
+    expect(urlCourante().textContent).not.toContain('doc=')
+  })
+
+  it('ouverture depuis la liste, fermeture Échap : URL propre et focus rendu au déclencheur', async () => {
+    const user = userEvent.setup()
+    renduSujet('/sujet/desarmement')
+    await user.click(screen.getAllByRole('button', { name: 'voir le détail' })[0]!)
+    expect(screen.getByRole('dialog')).toBeVisible()
+    expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Fermer' }))
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('dialog')).toBeNull()
+    expect(urlCourante().textContent).not.toContain('doc=')
+    // Focus piégé puis rendu : le bouton qui a ouvert la modale le récupère.
+    expect(document.activeElement).toHaveAccessibleName('voir le détail')
+  })
+
+  it('clic sur le fond de la modale : fermeture et URL nettoyée', async () => {
+    const user = userEvent.setup()
+    renduSujet('/sujet/desarmement?doc=cp-003')
+    await user.click(screen.getByRole('dialog'))
+    expect(screen.queryByRole('dialog')).toBeNull()
+    expect(urlCourante().textContent).not.toContain('doc=')
+  })
+
+  it('?doc= inconnu du corpus : URL nettoyée, message discret, aucun crash', () => {
+    renduSujet('/sujet/desarmement?doc=cp-999')
+    expect(screen.getByRole('status')).toHaveTextContent('cp-999')
+    expect(urlCourante().textContent).not.toContain('doc=')
+    expect(screen.queryByRole('dialog')).toBeNull()
+    // La page est vivante derrière : rien n'a crashé.
+    expect(screen.getByRole('heading', { level: 1, name: 'La crise du désarmement' })).toBeVisible()
+  })
+
+  it('?doc= mal formé : même traitement (nettoyé + tracé), jamais d’indifférence silencieuse', () => {
+    renduSujet('/sujet/desarmement?doc=patraque')
+    expect(screen.getByRole('status')).toHaveTextContent('patraque')
+    expect(urlCourante().textContent).not.toContain('doc=')
   })
 })

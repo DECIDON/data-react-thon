@@ -32,10 +32,40 @@ interface CarteDocumentProps {
   readonly sujets: readonly Sujet[]
   /** Document visé par `?doc=` : anneau de surlignage et rôle `aria-current`. */
   readonly cible?: boolean
-  /** Id HTML d'ancre pour le lien profond (ex. `document-cp-003`). */
+  /**
+   * Id HTML d'ancre pour le lien profond (ex. `document-cp-003`). La carte est alors rendue
+   * programmable au focus (`tabIndex -1`) : à la fermeture du détail 9.5, si le déclencheur a
+   * disparu, le focus peut revenir sur la carte ancrée plutôt que tomber en fin de page.
+   */
   readonly ancre?: string
   /** Pied de carte optionnel (ex. bouton « voir le détail » de la liste filtrée). */
   readonly children?: ReactNode
+}
+
+/**
+ * Puces de polarité par sujet — extraites de la carte sans changer un octet du rendu, pour
+ * que le détail (9.5) et la carte partagent la même logique (étiquettes, classes, ordre).
+ */
+export function PucesPolarite({
+  doc,
+  sujets,
+}: {
+  readonly doc: Document1934
+  readonly sujets: readonly Sujet[]
+}) {
+  return (
+    <ul aria-label="Polarités par sujet" className="mt-3 flex flex-wrap gap-2">
+      {doc.subjects.map((association) => (
+        <li
+          key={association.topicId}
+          className={`rounded-full px-2 py-0.5 text-xs ${CLASSE_POLARITE[association.polarity]}`}
+        >
+          {sujets.find((sujet) => sujet.id === association.topicId)?.label ?? association.topicId} ·{' '}
+          {LIBELLE_POLARITE[association.polarity]}
+        </li>
+      ))}
+    </ul>
+  )
 }
 
 export function CarteDocument({ doc, sujets, cible = false, ancre, children }: CarteDocumentProps) {
@@ -43,6 +73,7 @@ export function CarteDocument({ doc, sujets, cible = false, ancre, children }: C
   return (
     <article
       id={ancre}
+      tabIndex={ancre !== undefined ? -1 : undefined}
       aria-current={cible ? 'true' : undefined}
       className={`rounded-lg border bg-white p-4 ${
         cible ? 'border-amber-500 ring-2 ring-amber-300' : 'border-neutral-200'
@@ -62,17 +93,7 @@ export function CarteDocument({ doc, sujets, cible = false, ancre, children }: C
           {doc.speaker.name} — {libelleChambre(doc.speaker.chamber)}
         </p>
       )}
-      <ul aria-label="Polarités par sujet" className="mt-3 flex flex-wrap gap-2">
-        {doc.subjects.map((association) => (
-          <li
-            key={association.topicId}
-            className={`rounded-full px-2 py-0.5 text-xs ${CLASSE_POLARITE[association.polarity]}`}
-          >
-            {sujets.find((sujet) => sujet.id === association.topicId)?.label ?? association.topicId} ·{' '}
-            {LIBELLE_POLARITE[association.polarity]}
-          </li>
-        ))}
-      </ul>
+      <PucesPolarite doc={doc} sujets={sujets} />
       {children}
     </article>
   )

@@ -1,6 +1,12 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import { useCorpus1934, useDocumentsDuSujet, useListesDeFiltres, useSujet1934 } from './useCorpus1934'
+import {
+  useCorpus1934,
+  useDocument1934,
+  useDocumentsDuSujet,
+  useListesDeFiltres,
+  useSujet1934,
+} from './useCorpus1934'
 
 /**
  * Hooks de lecture sur le corpus réel du dépôt (renderHook, sans wrapper : le hook ne dépend
@@ -58,5 +64,21 @@ describe('hooks dérivés', () => {
     expect(result.current.journaux).toEqual(
       [...result.current.journaux].sort((a, b) => a.localeCompare(b, 'fr')),
     )
+  })
+
+  it('useDocument1934 retrouve le document ciblé par ?doc=, sans restriction de sujet', () => {
+    const { result } = renderHook(() => useDocument1934('cp-003'))
+    expect(result.current.ok).toBe(true)
+    if (!result.current.ok) return
+    expect(result.current.document?.id).toBe('cp-003')
+  })
+
+  it('useDocument1934 id inconnu ou absent : ok sans document (le message « introuvable » se décide à l’écran)', () => {
+    for (const id of ['cp-999', 'patraque', null]) {
+      const { result } = renderHook(() => useDocument1934(id))
+      expect(result.current.ok).toBe(true)
+      if (!result.current.ok) return
+      expect(result.current.document).toBeUndefined()
+    }
   })
 })

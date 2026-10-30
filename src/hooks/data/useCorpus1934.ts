@@ -1,5 +1,12 @@
 import type { Corpus1934 } from '@/data/1934/repository'
-import { chargerCorpus, documentsParSujet, journaux, locuteurs, sujetParId } from '@/data/1934/repository'
+import {
+  chargerCorpus,
+  documentParId,
+  documentsParSujet,
+  journaux,
+  locuteurs,
+  sujetParId,
+} from '@/data/1934/repository'
 import type { Document1934, Sujet } from '@/domain/1934'
 import type { DataError } from '@/platform/errors/base'
 import { useMemo } from 'react'
@@ -38,6 +45,10 @@ export type EtatFiltres1934 =
     }
   | Corpus1934EnErreur
 
+/** Corpus + document ciblé par `?doc=` (`document` absent si inconnu : le message « introuvable » est une décision d'UI). */
+export type EtatDocument1934 =
+  { readonly ok: true; readonly corpus: Corpus1934; readonly document?: Document1934 } | Corpus1934EnErreur
+
 /** Corpus complet (sujets + documents triés par date), chargé une fois au premier appel. */
 export function useCorpus1934(): EtatCorpus1934 {
   return useMemo(() => {
@@ -52,6 +63,15 @@ export function useCorpus1934(): EtatCorpus1934 {
 export function useSujet1934(id: string): EtatSujet1934 {
   const etat = useCorpus1934()
   return useMemo(() => (etat.ok ? { ...etat, sujet: sujetParId(etat.corpus, id) } : etat), [etat, id])
+}
+
+/** Le document d'identifiant donné (`?doc=` de la page sujet), dérivé du corpus entier. */
+export function useDocument1934(id: string | null): EtatDocument1934 {
+  const etat = useCorpus1934()
+  return useMemo(
+    () => (etat.ok ? { ...etat, document: id === null ? undefined : documentParId(etat.corpus, id) } : etat),
+    [etat, id],
+  )
 }
 
 /** Documents rattachés à un sujet (jointure par `topicId`), triés par date puis id. */

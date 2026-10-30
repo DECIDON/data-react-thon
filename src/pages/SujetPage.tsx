@@ -3,6 +3,7 @@ import { BarMois } from '@/components/features/1934/BarMois'
 import { BarreDeFiltres } from '@/components/features/1934/BarreDeFiltres'
 import { CarteDocument } from '@/components/features/1934/CarteDocument'
 import { Chronologie } from '@/components/features/1934/Chronologie'
+import { DocumentDetail } from '@/components/features/1934/DocumentDetail'
 import { Miroir } from '@/components/features/1934/Miroir'
 import {
   appliquerFiltres,
@@ -13,8 +14,8 @@ import {
 import { compteursSujet, libelleChambre } from '@/components/features/1934/presentation'
 import type { Chambre, Document1934 } from '@/domain/1934'
 import { pointsChronologie, selectionMiroir, seriesParMois } from '@/domain/1934'
-import { useDocumentsDuSujet, useListesDeFiltres } from '@/hooks/data/useCorpus1934'
-import { useEffect, useMemo } from 'react'
+import { useDocument1934, useDocumentsDuSujet, useListesDeFiltres } from '@/hooks/data/useCorpus1934'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router'
 
 /**
@@ -25,8 +26,14 @@ import { Link, useParams, useSearchParams } from 'react-router'
  *
  * Tout l'état de l'écran — type, orateurs, journaux, fenêtre de dates, document ciblé —
  * vit dans l'URL (`useSearchParams`, cf. spec §4) : survit au rechargement, partageable,
- * et les deux graphiques peignent **les mêmes documents filtrés** que la liste. Le
- * `?doc=` ancre et surligne la carte visée ; le volet de détail complet arrive en 9.5.
+ * et les deux graphiques peignent **les mêmes documents filtrés** que la liste.
+ *
+ * Le `?doc=` d'aujourd'hui (9.5) : il **ouvre le détail en modale** (`DocumentDetail`,
+ * résolu sur le corpus entier) **et** ancre/surligne la carte derrière — à la fermeture,
+ * l'utilisateur retrouve sa liste à sa place. Un `?doc=` qui ne résout rien dans le corpus
+ * est nettoyé de l'URL avec un message discret (choix acté : jamais de crash, jamais
+ * d'indifférence silencieuse — cf. l'esprit « erreur affichée » de la spec §2, appliqué
+ * aux entrants d'URL).
  */
 export function SujetPage() {
   const { id = '' } = useParams<{ id: string }>()
@@ -53,8 +60,19 @@ export function SujetPage() {
     return map
   }, [documentsSujet])
 
+  // Le document demandé par l'URL, **brut** (regex non filtrée) : c'est ce texte que recopie
+  // le message « introuvable », et c'est lui qu'on nettoie si rien ne résout derrière.
+  const idDemande = params.get('doc')
+  const etatDocumentCible = useDocument1934(idDemande)
+  const documentCible = etatDocumentCible.ok ? etatDocumentCible.document : undefined
+  // Notification ponctuelle, assumée en état local : elle n'existe QUE parce que l'URL a
+  // perdu le param (source de vérité) ; ni persistée, ni partageable, ni doublon d'état
+  // (cf. `state.md`, ligne « Détail d'un document »).
+  const [docIntrouvable, setDocIntrouvable] = useState<string | null>(null)
+
   // Le document ciblé (`?doc=`) s'ancre au centre et se surligne ; jamais de crash si
-  // l'id vise un document hors liste (filtré, ou d'un autre sujet).
+  // l'id vise un document hors liste (filtré, ou d'un autre sujet). La carte reste ancrée
+  // derrière la modale de détail : à la fermeture, l'utilisateur retrouve sa place.
   useEffect(() => {
     if (filtres.doc === null) return
     const cible = document.getElementById(`document-${filtres.doc}`)
@@ -63,9 +81,25 @@ export function SujetPage() {
   }, [filtres.doc])
 
   /** Un patch de filtre se fusionne avec l'état courant puis se réécrit proprement dans l'URL. */
-  function majFiltres(patch: Partial<FiltresSujet>): void {
-    setParams((precedents) => appliquerFiltres(precedents, { ...filtres, ...patch }))
-  }
+  const majFiltres = useCallback(
+    (patch: Partial<FiltresSujet>): void => {
+      setParams((precedents) => appliquerFiltres(precedents, { ...filtres, ...patch }))
+    },
+    [filtres, setParams],
+  )
+
+  // `?doc=` mal formé ou id inconnu du corpus : on nettoie l'URL (le détail ne peut pas
+  // s'ouvrir sur du vent) et on laisse une trace discrète mais explicite — pas de crash,
+  // pas d'indifférence silencieuse (choix commenté dans l'en-tête du composant).
+  useEffect(() => {
+    if (idDemande === null) return
+    if (documentCible !== undefined) {
+      setDocIntrouvable(null) // réouverture réussie : la notification précédente n'a plus de sens.
+      return
+    }
+    setDocIntrouvable(idDemande)
+    majFiltres({ doc: null })
+  }, [idDemande, documentCible, majFiltres])
 
   /** Clic (liste ou frise) : pose `?doc=`, ou le retire si le document est déjà ciblé. */
   function basculerDoc(docId: string): void {
@@ -141,6 +175,16 @@ export function SujetPage() {
         ))}
       </header>
 
+      {docIntrouvable !== null && (
+        <p
+          role="status"
+          className="-mt-4 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900"
+        >
+          Document introuvable : « {docIntrouvable} » ne figure pas au corpus du trimestre. L’adresse a été
+          nettoyée, les filtres sont intacts.
+        </p>
+      )}
+
       {phares.length > 0 && (
         <section aria-labelledby="phares-titre" className="flex flex-col gap-3">
           <h2 id="phares-titre" className="text-2xl font-semibold tracking-tight">
@@ -200,6 +244,17 @@ export function SujetPage() {
           </ul>
         )}
       </section>
+
+      {/* Détail (9.5, spec §4.3) : la modale n'existe que parce que l'URL porte `?doc=` ;
+          sa fermeture passe par `majFiltres`, donc par l'URL — jamais par un état doublon. */}
+      {documentCible !== undefined && (
+        <DocumentDetail
+          key={documentCible.id}
+          doc={documentCible}
+          sujets={corpus.sujets}
+          onClose={() => majFiltres({ doc: null })}
+        />
+      )}
     </main>
   )
 }
