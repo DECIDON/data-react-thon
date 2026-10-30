@@ -14,6 +14,23 @@ export const COULEURS_POLARITE: Record<Polarite, string> = {
 }
 
 /**
+ * Palette ordinaire des sujets (diagramme de répartition du panneau du jour) : teintes
+ * pleines `-500` de Tailwind, appariées par rang au `sujets` du corpus — un sujet garde
+ * donc la même couleur d'un jour à l'autre. Au-delà de la palette, on recycle (moyennant
+ * 6 à 8 sujets au registre, la chance de collision visuelle est faible).
+ */
+export const COULEURS_SUJETS: readonly string[] = [
+  '#0ea5e9', // sky-500
+  '#f59e0b', // amber-500
+  '#8b5cf6', // violet-500
+  '#10b981', // emerald-500
+  '#f43f5e', // rose-500
+  '#6366f1', // indigo-500
+  '#84cc16', // lime-500
+  '#14b8a6', // teal-500
+]
+
+/**
  * Thème clair commun de tous les graphiques Nivo (spec §5, ADR C-009) : un seul objet,
  * aligné sur la palette Tailwind de l'app (fond `neutral-50`, texte `neutral-900`).
  * Les valeurs sont les hex de l'échelle `neutral` de Tailwind : au niveau SVG on n'a

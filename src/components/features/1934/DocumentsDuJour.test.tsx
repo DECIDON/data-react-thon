@@ -2,14 +2,26 @@ import type { Document1934, Sujet } from '@/domain/1934'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { DocumentsDuJour, suivrevers } from './DocumentsDuJour'
 
 /**
  * Panneau du jour — cartes-liens (post-R9) : cliquer une carte ouvre son sujet dans la page
  * sujet, le lien profond `?doc=` rouvrant le détail du document. Assertions sur libellés
- * réels et href (C-006), routeur en mémoire.
+ * réels et href (C-006), routeur en mémoire. Le donut de répartition est mocké à la
+ * frontière (C-009) : on vérifie qu'il est monté avec les documents du jour, pas son SVG.
  */
+vi.mock('@nivo/pie', async () => {
+  const React = await import('react')
+  return {
+    ResponsivePie: ({ data }: { data: Array<{ id: string }> }) =>
+      React.createElement(
+        'div',
+        null,
+        data.map((ligne) => React.createElement('p', { key: ligne.id }, `donut ${ligne.id}`)),
+      ),
+  }
+})
 
 const SUJETS: Sujet[] = [
   {
@@ -86,5 +98,23 @@ describe('DocumentsDuJour', () => {
       screen.getByRole('link', { name: /^ouvrir le sujet depuis cette coupe de presse/i }),
     )
     expect(screen.getByText('/sujet/ligues?doc=cp-001')).toBeInTheDocument()
+  })
+
+  it('le diagramme de répartition des sujets du jour accompagne les cartes', () => {
+    renduAvecRoute()
+    expect(screen.getByRole('heading', { level: 3, name: 'Répartition des sujets' })).toBeVisible()
+    // DOC porte deux sujets, un chacun : deux segments égaux peints par le mock.
+    expect(screen.getByText('donut desarmement')).toBeInTheDocument()
+    expect(screen.getByText('donut ligues')).toBeInTheDocument()
+  })
+
+  it('jour sans document : pas de diagramme, seulement l’absence au registre', () => {
+    render(
+      <MemoryRouter>
+        <DocumentsDuJour jour="1934-02-14" documents={[]} sujets={SUJETS} />
+      </MemoryRouter>,
+    )
+    expect(screen.getByText(/aucun document au registre/i)).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Répartition des sujets' })).toBeNull()
   })
 })

@@ -6,6 +6,7 @@ import {
   estPriseDeParole,
   joursCorpus,
   pointsChronologie,
+  repartitionParSujet,
   selectionMiroir,
   seriesParMois,
 } from './aggregats'
@@ -177,6 +178,50 @@ describe('seriesParMois', () => {
 
   it('mois sans aucun document du sujet filtré : aucune série', () => {
     expect(seriesParMois([coupe('cp-001', '1934-01-05', [P('budget', 'neutre')])], 'desarmement')).toEqual([])
+  })
+})
+
+describe('repartitionParSujet', () => {
+  it('lot vide → aucun segment', () => {
+    expect(repartitionParSujet([])).toEqual([])
+  })
+
+  it('compte par association, pourcentages sur le total des associations (somme = 100)', () => {
+    // ligues : 3 associations ; budget : 1 → 75 % / 25 %.
+    const docs = [
+      prise('pd-001', '1934-01-10', [P('ligues', 'negatif')]),
+      coupe('cp-001', '1934-01-10', [P('ligues', 'neutre')]),
+      prise('pd-002', '1934-01-10', [P('ligues', 'positif'), P('budget', 'neutre')]),
+    ]
+    expect(repartitionParSujet(docs)).toEqual([
+      { sujetId: 'ligues', documents: 3, pourcentage: 75 },
+      { sujetId: 'budget', documents: 1, pourcentage: 25 },
+    ])
+  })
+
+  it('un document multi-sujets pèse dans chaque sujet qu’il porte', () => {
+    const docs = [
+      coupe('cp-001', '1934-01-10', [P('ligues', 'neutre'), P('budget', 'neutre')]),
+      coupe('cp-002', '1934-01-10', [P('budget', 'negatif')]),
+    ]
+    expect(repartitionParSujet(docs)).toEqual([
+      { sujetId: 'budget', documents: 2, pourcentage: (2 / 3) * 100 },
+      { sujetId: 'ligues', documents: 1, pourcentage: (1 / 3) * 100 },
+    ])
+  })
+
+  it('tri par compte décroissant, puis sujetId croissant en égalité', () => {
+    const docs = [
+      coupe('cp-001', '1934-01-10', [P('budget', 'neutre')]),
+      coupe('cp-002', '1934-01-10', [P('desarmement', 'neutre')]),
+      prise('pd-001', '1934-01-10', [P('ligues', 'neutre'), P('budget', 'positif')]),
+    ]
+    expect(repartitionParSujet(docs).map((part) => part.sujetId)).toEqual(['budget', 'desarmement', 'ligues'])
+  })
+
+  it('les sujets sans association du lot sont absents (rien à peindre)', () => {
+    const docs = [coupe('cp-001', '1934-01-10', [P('ligues', 'neutre')])]
+    expect(repartitionParSujet(docs).map((part) => part.sujetId)).toEqual(['ligues'])
   })
 })
 

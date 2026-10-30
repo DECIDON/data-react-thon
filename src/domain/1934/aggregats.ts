@@ -118,6 +118,37 @@ export function seriesParMois(documents: readonly Document1934[], pourSujet?: Su
   return [...parMois.values()].sort((a, b) => a.mois.localeCompare(b.mois))
 }
 
+/** Un segment du diagramme de répartition : un sujet, son compte, sa part en pourcentage. */
+export interface PartSujet {
+  sujetId: SujetId
+  documents: number
+  /** Part des associations du lot (0-100) : la somme des parts vaut 100. */
+  pourcentage: number
+}
+
+/**
+ * Répartition des sujets d'un lot (panneau du jour, accueil) : compte **une fois par
+ * association document×sujet** — même règle de comptage que la frise et le bar mensuel
+ * (spec §2). Le dénominateur est donc le total des associations, non le nombre de
+ * documents : un document multi-sujets pèse partout. Trié par compte décroissant puis
+ * `sujetId` croissant (déterministe) ; les sujets sans association sont absents — il n'y
+ * a rien à peindre pour eux.
+ */
+export function repartitionParSujet(documents: readonly Document1934[]): PartSujet[] {
+  const comptes = new Map<SujetId, number>()
+  let total = 0
+  for (const doc of documents) {
+    for (const association of doc.subjects) {
+      comptes.set(association.topicId, (comptes.get(association.topicId) ?? 0) + 1)
+      total += 1
+    }
+  }
+  if (total === 0) return []
+  return [...comptes.entries()]
+    .map(([sujetId, compte]) => ({ sujetId, documents: compte, pourcentage: (compte / total) * 100 }))
+    .sort((a, b) => b.documents - a.documents || a.sujetId.localeCompare(b.sujetId))
+}
+
 /**
  * Bloc miroir d'une page de sujet (CONTEXT.md) : le phare presse et le phare parlement
  * du même sujet, en regard. Lot vide dans un couloir ⇒ propriété absente (jamais `undefined`

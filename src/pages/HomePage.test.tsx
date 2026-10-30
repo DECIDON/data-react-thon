@@ -34,6 +34,18 @@ vi.mock('@nivo/calendar', async () => {
   }
 })
 
+vi.mock('@nivo/pie', async () => {
+  const React = await import('react')
+  return {
+    ResponsivePie: ({ data }: { data: Array<{ id: string }> }) =>
+      React.createElement(
+        'div',
+        null,
+        data.map((ligne) => React.createElement('p', { key: ligne.id }, `donut ${ligne.id}`)),
+      ),
+  }
+})
+
 function rendu() {
   return render(
     <BrowserRouter>
@@ -74,6 +86,8 @@ describe('HomePage — accueil 1934', () => {
     await user.click(screen.getByRole('button', { name: /^1934-01-09/ }))
     expect(window.location.search).toContain('jour=1934-01-09')
     expect(screen.getByRole('heading', { level: 2, name: 'Documents du 9 janvier 1934' })).toBeVisible()
+    // Le diagramme de répartition des sujets du jour accompagne le panneau.
+    expect(screen.getByRole('heading', { level: 3, name: 'Répartition des sujets' })).toBeVisible()
     expect(screen.getByText('Prise de parole')).toBeVisible()
     expect(screen.getAllByText('Courrier libre 2 · neutre').length).toBeGreaterThan(0)
   })

@@ -1,11 +1,14 @@
 import type { Document1934, Sujet } from '@/domain/1934'
+import { repartitionParSujet } from '@/domain/1934'
 import { CarteDocument } from './CarteDocument'
+import { RepartitionSujets } from './RepartitionSujets'
 import { formatDateLongue } from './presentation'
 
 /**
- * Panneau « documents du jour » sous le calendrier (spec §4.1) : titre, date, puis une
- * carte par document. Depuis 9.4, la carte elle-même est factorisée dans `CarteDocument`
- * (réutilisée par la page sujet) ; ce composant ne garde que l'habillage du panneau.
+ * Panneau « documents du jour » sous le calendrier (spec §4.1) : titre, date, répartition
+ * des sujets du jour en pourcentages, puis une carte par document. Depuis 9.4, la carte
+ * elle-même est factorisée dans `CarteDocument` (réutilisée par la page sujet) ; ce
+ * composant garde l'habillage du panneau et l'agrégat du donut.
  * Composant aveugle à l'URL : la page lui fournit le jour (validé) et les documents.
  *
  * Chaque carte est un lien vers le sujet du document (post-R9) : `suivrevers` construit
@@ -40,13 +43,16 @@ export function DocumentsDuJour({ jour, documents, sujets }: DocumentsDuJourProp
       {documents.length === 0 ? (
         <p className="text-sm text-neutral-600">Aucun document au registre pour ce jour-là.</p>
       ) : (
-        <ul className="flex flex-col gap-3">
-          {documents.map((doc) => (
-            <li key={doc.id}>
-              <CarteDocument doc={doc} sujets={sujets} lien={suivrevers(doc)} />
-            </li>
-          ))}
-        </ul>
+        <>
+          <RepartitionSujets parts={repartitionParSujet(documents)} sujets={sujets} />
+          <ul className="flex flex-col gap-3">
+            {documents.map((doc) => (
+              <li key={doc.id}>
+                <CarteDocument doc={doc} sujets={sujets} lien={suivrevers(doc)} />
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </section>
   )
