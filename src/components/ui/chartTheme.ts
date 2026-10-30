@@ -1,4 +1,17 @@
+import type { Polarite } from '@/domain/1934'
 import type { PartialTheme } from '@nivo/theming'
+
+/**
+ * Palette de polarité commune aux puces (9.3) et aux graphiques (9.4) : rouge / gris /
+ * vert, dans les teintes pleines des palette Tailwind correspondantes (red-600,
+ * neutral-400, emerald-600). Les classes CSS des puces vivent dans `CarteDocument` ;
+ * ici les hex, seuls utilisables au niveau SVG.
+ */
+export const COULEURS_POLARITE: Record<Polarite, string> = {
+  positif: '#059669', // emerald-600
+  neutre: '#a3a3a3', // neutral-400
+  negatif: '#dc2626', // red-600
+}
 
 /**
  * Thème clair commun de tous les graphiques Nivo (spec §5, ADR C-009) : un seul objet,

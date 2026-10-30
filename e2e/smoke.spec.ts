@@ -26,10 +26,29 @@ test.describe('fumée', () => {
     await expect(page.getByText('Prototype — données fictives')).toBeVisible()
   })
 
-  test('une carte vitrine mène à la page sujet provisoire', async ({ page }) => {
+  test('une carte vitrine mène à la page sujet : phares, miroir et filtres rendus', async ({ page }) => {
     await page.goto('/')
     await page.getByRole('link', { name: 'La crise du désarmement' }).click()
     await expect(page.getByRole('heading', { level: 1, name: 'La crise du désarmement' })).toBeVisible()
-    await expect(page.getByText(/Suite du parcours à l’étape 9\.4/)).toBeVisible()
+    await expect(page.getByRole('heading', { level: 2, name: 'Extraits phares' })).toBeVisible()
+    await expect(page.getByRole('heading', { level: 2, name: 'Miroir du sujet' })).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Parlement' })).toBeVisible()
+  })
+
+  test('parcours juré 9.4 : filtres en URL puis ancrage du détail', async ({ page }) => {
+    await page.goto('/sujet/desarmement')
+    // Filtre « Parlement » : l'URL porte le filtre, la liste suit (spec §4).
+    await page.getByRole('button', { name: 'Parlement' }).click()
+    await expect(page).toHaveURL(/type=parlement/)
+    const liste = page.getByRole('region', { name: 'Liste chronologique' })
+    await expect(liste.getByText('Coupe de presse')).toHaveCount(0)
+    // Le premier document filtré s'ancre en détail via ?doc=.
+    await liste.getByRole('button', { name: 'voir le détail' }).first().click()
+    await expect(page).toHaveURL(/doc=(?:pd|cp)-\d{3}/)
+    await expect(liste.getByRole('button', { name: 'masquer le ciblage' })).toBeVisible()
+    // Le rechargement restore l'état (les filtres survivent à l'URL).
+    await page.reload()
+    await expect(page.getByRole('button', { name: 'Parlement' })).toHaveAttribute('aria-pressed', 'true')
+    await expect(liste.getByRole('button', { name: 'masquer le ciblage' })).toBeVisible()
   })
 })
