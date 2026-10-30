@@ -3,7 +3,7 @@ import type { JourCorpus } from '@/domain/1934'
 import { PERIODE_1934 } from '@/domain/1934'
 import { ResponsiveCalendar } from '@nivo/calendar'
 import { useMemo } from 'react'
-import { versCalendrier } from './calendrier'
+import { echelleDegrade, versCalendrier } from './calendrier'
 
 /**
  * Bandeau calendrier du trimestre (spec §4.1) : Q1 1934, intensité = documents du jour.
@@ -11,7 +11,11 @@ import { versCalendrier } from './calendrier'
  * rend l'agrégat au calendrier et remonte le jour cliqué. La page branche l'URL.
  */
 
-/** Rampe d'intensité « papier journal » : amber-200 → amber-500 → amber-900 (palette Tailwind). */
+/**
+ * Rampe d'intensité « papier journal » : amber-200 → amber-500 → amber-900 (palette Tailwind),
+ * parcourue en dégradé continu entre le min et le max du trimestre (`echelleDegrade`), et non
+ * quantifiée en cases discrètes.
+ */
 const RAMPE_INTENSITE = ['#fde68a', '#f59e0b', '#78350f']
 
 /** Jours sans document : la teinte de la page à peine teintée (neutral-100). */
@@ -37,7 +41,17 @@ interface Calendrier1934Props {
 }
 
 export function Calendrier1934({ jours, jourSelectionne, surJourClique }: Calendrier1934Props) {
-  const data = useMemo(() => versCalendrier(jours), [jours])
+  const lignes = useMemo(() => versCalendrier(jours), [jours])
+  // L'échelle est calculée sur les valeurs du trimestre : le min peint la teinte la plus
+  // claire, le max la plus foncée, tout le reste est interpolé (dégradé continu).
+  const echelle = useMemo(
+    () =>
+      echelleDegrade(
+        lignes.map((ligne) => ligne.value),
+        RAMPE_INTENSITE,
+      ),
+    [lignes],
+  )
   return (
     <section
       aria-labelledby="calendrier-titre"
@@ -58,8 +72,8 @@ export function Calendrier1934({ jours, jourSelectionne, surJourClique }: Calend
         <ResponsiveCalendar
           from={PERIODE_1934.du}
           to={PERIODE_1934.au}
-          data={data}
-          colors={RAMPE_INTENSITE}
+          data={lignes}
+          colorScale={echelle}
           emptyColor={COULEUR_VIDE}
           dayBorderWidth={1}
           dayBorderColor={COULEUR_GRILLE}
