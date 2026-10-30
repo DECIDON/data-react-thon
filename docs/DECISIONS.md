@@ -102,6 +102,24 @@ CSS maison — rejetée : la branche s'appelle dataviz.
 **Conséquences.** Trois paquets Nivo + leurs pairs (`@react-spring/web`, auto-sizer) au bundle ; la politique
 de mock de graphiques vaut pour toute lib de rendu futur ; montée de version majeure = ADR (C-001).
 
+## C-010 — La frise passe du scatter à l'AreaBump (2026-10-30) · statut : acceptée
+
+**Contexte.** La spec §4.2 décrivait une frise `@nivo/scatter` en couloirs, un point par document,
+clic → `?doc=`. Demande utilisateur : lire des **volumes** sur le trimestre — une bande pour les
+prises de parole positives, une pour les négatives, idem côté presse.
+**Décision.** `Chronologie` peint un **AreaBump** (`@nivo/bump` 0.99, ajouté en dépendance ; la doc
+confirmait N colonnes possibles, `compute.ts` construit sa propre `scalePoint`). Six bandes au plus,
+couloir × polarité, une colonne par mois complet du trimestre (zéros padding : toute bande traverse
+toute colonne), couleur relue depuis l'id de série comme avant. Le clic `?doc=` **disparaît de la
+frise** : une bande agrège N documents, aucun document sous le curseur ; l'infobulle rend les comptes
+mois par mois et la liste chronologique reste le chemin vers le détail.
+**Alternatives.** Garder le scatter et ajouter un second graphique — rejeté : deux frises redondantes ;
+LineBump — rejeté : des traits, pas les quantités demandées ; agrégat `domain/` nouveau — rejeté :
+`pointsChronologie` suffit, le comptage mensuel est une décision de présentation (`chronologie.ts`).
+**Conséquences.** `@nivo/scatterplot` sort des dépendances, `@nivo/bump` y entre ; la spec §4.2 n'est
+pas réécrite (document d'époque) — cette ADR en est la lecture à jour ; le mock de `SujetPage.test.tsx`
+peint des bandes, plus de boutons de frise.
+
 ## À venir (pas encore d'ADR)
 
 - Choix de la persistance (Dexie v1 sans héritage) — au premier besoin d'écriture (déclencheur écrit en C-008).

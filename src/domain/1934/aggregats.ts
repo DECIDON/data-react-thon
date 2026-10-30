@@ -57,7 +57,7 @@ export function joursCorpus(documents: readonly Document1934[]): JourCorpus[] {
   return [...parDate.values()].sort((a, b) => a.date.localeCompare(b.date))
 }
 
-/** Point de la frise `@nivo/scatter` : X = date, Y = couloir, couleur = polarité, clic → `?doc=`. */
+/** Point de la frise (aires en bandes, voir `chronologie.ts`) : date, couloir, polarité — compté par mois. */
 export interface PointChronologie {
   id: string
   date: string

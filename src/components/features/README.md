@@ -18,7 +18,8 @@ l'affaire de `pages/` (C-003, `docs/state.md`).
   locuteur, puces de polarité ; l'ouverture appartient à `?doc=`, le composant n'a aucun état d'ouverture.
 - `BarreDeFiltres.tsx` — filtres secondaires de la page sujet (segmented type, menus à cases locuteurs/
   journaux, bornes de dates) ; aveugle à l'URL, il reçoit les filtres validés et signale les changements.
-- `Chronologie.tsx` / `BarMois.tsx` — frise `@nivo/scatter` (clic = `?doc=`) et bar empilé mensuel `@nivo/bar`.
+- `Chronologie.tsx` / `BarMois.tsx` — frise en bandes `@nivo/bump` (AreaBump : une bande par couloir ×
+  polarité, épaisseur = comptes du mois, infobulle = détail mois par mois) et bar empilé mensuel `@nivo/bar`.
 - `calendrier.ts` / `chronologie.ts` / `filtres.ts` / `presentation.ts` — adaptateurs purs (forme Nivo,
   lecture tolérante de l'URL, troncature, compteurs) : les mappages sont des décisions de présentation,
   testés sans DOM ni Nivo.

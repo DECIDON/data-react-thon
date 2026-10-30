@@ -22,8 +22,8 @@ import { Link, useParams, useSearchParams } from 'react-router'
 /**
  * Page sujet (spec §4.2, mouture complète de l'étape 9.4). Dans l'ordre imposé par la
  * spec : en-tête (label, description, compteurs, badge de chambre si orateur filtré) ;
- * extraits **phares** ; **miroir** presse/parlement ; filtres secondaires ; frise
- * `scatter` cliquable ; bar empilé mensuel ; liste chronologique filtrée.
+ * extraits **phares** ; **miroir** presse/parlement ; filtres secondaires ; frise en
+ * bandes (AreaBump, comptes par mois) ; bar empilé mensuel ; liste chronologique filtrée.
  *
  * Tout l'état de l'écran — type, orateurs, journaux, fenêtre de dates, document ciblé —
  * vit dans l'URL (`useSearchParams`, cf. spec §4) : survit au rechargement, partageable,
@@ -106,7 +106,7 @@ export function SujetPage() {
     majFiltres({ doc: null })
   }, [idDemande, documentCible, majFiltres])
 
-  /** Clic (liste ou frise) : pose `?doc=`, ou le retire si le document est déjà ciblé. */
+  /** Clic (liste) : pose `?doc=`, ou le retire si le document est déjà ciblé. */
   function basculerDoc(docId: string): void {
     majFiltres({ doc: filtres.doc === docId ? null : docId })
   }
@@ -227,7 +227,7 @@ export function SujetPage() {
         onChange={majFiltres}
       />
 
-      <Chronologie points={points} documents={documentsFiltres} surDocumentClique={basculerDoc} />
+      <Chronologie points={points} />
 
       <BarMois series={seriesMensuelles} />
 

@@ -1,27 +1,40 @@
 import { COULEURS_POLARITE } from '@/components/ui/chartTheme'
-import type { Couloir, Document1934, PointChronologie, Polarite } from '@/domain/1934'
+import type { Couloir, PointChronologie, Polarite } from '@/domain/1934'
+import { PERIODE_1934 } from '@/domain/1934'
 
 /**
- * Adaptateur de la frise `@nivo/scatterplot` (spec §4.2, §5) : transposition des points du domaine
- * (`pointsChronologie`) vers les séries attendues par Nivo. Comme pour le calendrier, la
- * transformation est une décision de présentation : elle vit dans `components/features/`,
- * jamais dans `domain/` (C-003). Module sans framework : testable seul sous Vitest.
+ * Adaptateur de la frise `@nivo/bump` (AreaBump, spec §4.2 revisitée) : transposition des
+ * points du domaine (`pointsChronologie`) en bandes empilées par mois. Comme pour le
+ * calendrier, la transformation est une décision de présentation : elle vit dans
+ * `components/features/`, jamais dans `domain/` (C-003). Module sans framework : testable
+ * seul sous Vitest.
  *
- * Deux choix, documentés :
- * - Y **catégoriel** : Nivo (0.99) connait l'échelle `point`, les couloirs sont donc bien
- *   des catégories — pas de repli numérique 0/1 nécessaire. Les valeurs `y` sont des
- *   libellés français (« Presse » / « Parlement »), peints tels quels par l'axe.
- * - couleur par **polarité** : `@nivo/scatterplot` colore par série (le datum transmis à
- *   l'échelle de couleurs ne porte que `serieId`), d'où une série par couple
- *   couloir × polarité ; la couleur se relit depuis l'id de série (`couleurSerie`).
+ * Trois choix, documentés :
+ * - X **mensuel** : une colonne par mois complet du trimestre (`1934-01` … `1934-03`).
+ *   Contrairement au LineBump, l'AreaBump accepte N colonnes (son `compute.ts` construit
+ *   lui-même la `scalePoint` des x rencontrés) ; on padde donc chaque série de zéros pour
+ *   que toute bande traverse toutes les colonnes.
+ * - une série par couple couloir × polarité (6 au plus) : l'AreaBump empile et trie les
+ *   bandes par valeur à chaque colonne, la couleur (portée par la série) reste donc le
+ *   seul fil de polarité lisible — relue depuis l'id de série (`couleurSerie`).
+ * - **agrégat, plus de document** : le clic `?doc=` du scatterplot n'a plus de sens sous
+ *   une bande (une bande couvre N documents) ; l'infobulle montre les comptes. Les couples
+ *   sans document sont exclus : rien à peindre, rien à survoler.
  */
 
-/** Libellé français d'un couloir — sert d'étiquette d'axe et de valeur `y`. */
+/** Libellé français d'un couloir — sert d'étiquette de bande. */
 export const LIBELLE_COULOIR: Record<Couloir, string> = { presse: 'Presse', parlement: 'Parlement' }
 
 /** Ordre d'affichage des couloirs (spec §4.2 : Presse d'abord) et des polarités. */
 export const ORDRE_COULOIRS: readonly Couloir[] = ['presse', 'parlement']
 export const ORDRE_POLARITES: readonly Polarite[] = ['positif', 'neutre', 'negatif']
+
+/** Libellé court de polarité pour les bandes — relû ici pour garder le module sans framework. */
+const LIBELLE_POLARITE_BANDE: Record<Polarite, string> = {
+  positif: 'positif',
+  neutre: 'neutre',
+  negatif: 'négatif',
+}
 
 /** Id de série Nivo pour un couple couloir × polarité (`id` ne sert qu'à retrouver la couleur). */
 export function idSerie(couloir: Couloir, polarity: Polarite): string {
@@ -36,60 +49,82 @@ export function couleurSerie(serieId: string): string {
     : '#a3a3a3'
 }
 
-/** Datum enrichi : ce que l'infobulle et le clic réclament (le clic pose `?doc=`, spec §5). */
-export interface DatumChronologie {
-  id: string
-  x: string
-  y: string
-  polarity: Polarite
-  doc: Document1934
+/** Libellé lisible d'une bande, relu depuis son id (`« parlement:negatif » → « Parlement · négatif »`). */
+export function libelleBande(serie: { id: string }): string {
+  const [couloir, polarity] = serie.id.split(':')
+  if (couloir === 'presse' || couloir === 'parlement') {
+    const libellePolarite =
+      polarity === 'positif' || polarity === 'neutre' || polarity === 'negatif'
+        ? LIBELLE_POLARITE_BANDE[polarity]
+        : undefined
+    if (libellePolarite !== undefined) return `${LIBELLE_COULOIR[couloir]} · ${libellePolarite}`
+  }
+  return serie.id // id imprévu : on l'affiche brut plutôt que de mentir.
 }
 
-/** Une série Nivo : { id, data } (contrat `ScatterPlotRawSerie`). */
-export interface SerieChronologie {
-  id: string
-  data: DatumChronologie[]
+/** Datum d'une colonne AreaBump : mois ISO (`YYYY-MM`) et compte de documents. */
+export interface DatumBandeChronologie {
+  x: string
+  y: number
+}
+
+/** Une série AreaBump : { id, data } (contrat `AreaBumpSerie` ; alias, pas interface : Nivo l'intersecte avec `Record<string, unknown>`). */
+export type SerieBandeChronologie = { id: string; data: DatumBandeChronologie[] }
+
+/**
+ * Tous les mois de la période (`YYYY-MM`), croissants — les colonnes de la frise, zéros
+ * compris : chaque bande traverse toutes les colonnes, sinon son aire se brise.
+ * Borné par `PERIODE_1934` (janvier → mars 1934), dérivé et non codé en dur.
+ */
+export function moisDeLaPeriode(du: string = PERIODE_1934.du, au: string = PERIODE_1934.au): string[] {
+  const mois: string[] = []
+  let annee = Number(du.slice(0, 4))
+  let numero = Number(du.slice(5, 7))
+  const anneeFin = Number(au.slice(0, 4))
+  const numeroFin = Number(au.slice(5, 7))
+  while (annee < anneeFin || (annee === anneeFin && numero <= numeroFin)) {
+    mois.push(`${annee}-${String(numero).padStart(2, '0')}`)
+    numero += 1
+    if (numero === 13) {
+      numero = 1
+      annee += 1
+    }
+  }
+  return mois
 }
 
 /**
- * Points du domaine → séries couloir × polarité, vides comprises : le point d'une série est
- * **cliquable** et le clic pose `?doc=` (la page branche `onClick` sur `node.data.doc.id`).
- * Les couples sans document sont exclus.
- * @param documents pour enrichir chaque point de son document (tooltip date/source/extrait).
+ * Points du domaine → bandes couloir × polarité, zéros padding sur chaque mois de la
+ * période. Un document compte une fois par association document×sujet (le point est déjà
+ * émis par association, spec §2). Les couples sans aucun document sont exclus.
  */
-export function versSériesChronologie(
-  points: readonly PointChronologie[],
-  documents: readonly Document1934[],
-): SerieChronologie[] {
-  const documentParId = new Map(documents.map((doc) => [doc.id, doc]))
-  const series = new Map<string, DatumChronologie[]>()
+export function versBandesChronologie(points: readonly PointChronologie[]): SerieBandeChronologie[] {
+  const mois = moisDeLaPeriode()
+  const visibles = new Set(mois)
+  // comptes[`${couloir}:${polarité}`][`YYYY-MM`] = nombre de documents.
+  const comptes = new Map<string, Map<string, number>>()
   for (const point of points) {
-    const doc = documentParId.get(point.id)
-    if (doc === undefined) continue // un point sans document (lot désynchronisé) ne se peint pas.
+    const moisDuPoint = point.date.slice(0, 7)
+    if (!visibles.has(moisDuPoint)) continue // hors période : rien à peindre dans ces colonnes.
     const serie = idSerie(point.lane, point.polarity)
-    const donnees = series.get(serie) ?? []
-    donnees.push({
-      id: point.id,
-      x: point.date,
-      y: LIBELLE_COULOIR[point.lane],
-      polarity: point.polarity,
-      doc,
-    })
-    series.set(serie, donnees)
+    const parMois = comptes.get(serie) ?? new Map<string, number>()
+    parMois.set(moisDuPoint, (parMois.get(moisDuPoint) ?? 0) + 1)
+    comptes.set(serie, parMois)
   }
-  const triees: SerieChronologie[] = []
+  const triees: SerieBandeChronologie[] = []
   for (const couloir of ORDRE_COULOIRS) {
     for (const polarity of ORDRE_POLARITES) {
-      const donnees = series.get(idSerie(couloir, polarity))
-      if (donnees !== undefined && donnees.length > 0)
-        triees.push({ id: idSerie(couloir, polarity), data: donnees })
+      const serie = idSerie(couloir, polarity)
+      const parMois = comptes.get(serie)
+      if (parMois === undefined) continue // couple sans document : pas de bande.
+      triees.push({ id: serie, data: mois.map((m) => ({ x: m, y: parMois.get(m) ?? 0 })) })
     }
   }
   return triees
 }
 
-/** Libellé de mois en français pour l'axe X temps (Nivo rend « Jan » par défaut). */
+/** Libellé de mois en français pour l'axe X (`« 1934-02 » → « février 1934 »`). */
 const FORMATEUR_MOIS = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' })
-export function libelleMoisAxe(date: Date): string {
-  return FORMATEUR_MOIS.format(date)
+export function libelleMoisAxe(mois: string): string {
+  return FORMATEUR_MOIS.format(new Date(`${mois}-01T00:00:00Z`))
 }

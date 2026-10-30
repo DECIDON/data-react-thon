@@ -5,34 +5,20 @@ import { describe, expect, it, vi } from 'vitest'
 import { SujetPage } from './SujetPage'
 
 /**
- * Page sujet (étape 9.4), **Nivo mocké à la frontière** (C-009) : le mock scatter peint
- * un bouton par point, libellé de son id de document et de son couloir ; le mock bar
- * peint une ligne par mois. Les assertions restent sur libellés réels (C-006). Une
- * « sonde » rend l'URL courante à côté de la page : c'est l'URL qui est l'état (spec §4).
+ * Page sujet (étape 9.4), **Nivo mocké à la frontière** (C-009) : le mock bump peint une
+ * ligne de texte par bande (identifiant de série) ; le mock bar peint une ligne par mois.
+ * Les assertions restent sur libellés réels (C-006). Une « sonde » rend l'URL courante à
+ * côté de la page : c'est l'URL qui est l'état (spec §4).
  */
 
-vi.mock('@nivo/scatterplot', async () => {
+vi.mock('@nivo/bump', async () => {
   const React = await import('react')
   return {
-    ResponsiveScatterPlot: ({
-      data,
-      onClick,
-    }: {
-      data: Array<{ id: string; data: Array<{ id: string; x: string; y: string }> }>
-      onClick?: (node: { data: { id: string } }) => void
-    }) =>
+    ResponsiveAreaBump: ({ data }: { data: Array<{ id: string }> }) =>
       React.createElement(
         'div',
         null,
-        data.flatMap((serie) =>
-          serie.data.map((point) =>
-            React.createElement(
-              'button',
-              { key: `${serie.id}-${point.id}`, type: 'button', onClick: () => onClick?.({ data: point }) },
-              `${point.id} ${point.x} ${point.y}`,
-            ),
-          ),
-        ),
+        data.map((serie) => React.createElement('p', { key: serie.id }, `bande ${serie.id}`)),
       ),
   }
 })
@@ -111,12 +97,13 @@ describe('SujetPage — parcours 9.4', () => {
     expect(screen.getByText('bar 1934-01')).toBeVisible()
   })
 
-  it('clic sur un point de la frise : l’URL pose ?doc= et la carte est ciblée', async () => {
-    const user = userEvent.setup()
+  it('la frise peint une bande par couple couloir × polarité présent dans le trimestre filtré', () => {
     renduSujet('/sujet/desarmement')
-    await user.click(screen.getByRole('button', { name: 'cp-003 1934-01-13 Presse' }))
-    expect(urlCourante().textContent).toContain('doc=cp-003')
-    expect(screen.getByRole('button', { name: 'masquer le ciblage' })).toBeVisible()
+    expect(screen.getByRole('heading', { level: 2, name: 'Chronologie du trimestre' })).toBeVisible()
+    // Une bande agrège des documents : le mock peint l'id de série, pas l'id de document.
+    expect(screen.getAllByText(/^bande (presse|parlement):(positif|neutre|negatif)$/).length).toBeGreaterThan(
+      0,
+    )
   })
 
   it('lien profond ?doc= : la carte visée est ancrée et ciblée dès l’arrivée (rechargement)', () => {

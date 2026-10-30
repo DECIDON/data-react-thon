@@ -25,8 +25,8 @@
   },
   "dependencies": {
     "@nivo/bar": "^0.99.0",
+    "@nivo/bump": "^0.99.0",
     "@nivo/calendar": "^0.99.0",
-    "@nivo/scatterplot": "^0.99.0",
     "@nivo/theming": "^0.99.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
